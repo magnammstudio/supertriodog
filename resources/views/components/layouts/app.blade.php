@@ -15,6 +15,12 @@
         </a>
     </div>
     <div class="w-full sm:max-w-md mt-6 px-6 py-4 bg-white shadow-md overflow-hidden sm:rounded-lg">
+        @if (!env('SMS_API',true))
+            <span class="absolute top-2 right-2">
+                <x-badge negative icon="exclamation" nagative label="SMS verlifacition turn off" />
+            </span>
+            
+        @endif
         @yield('content')
 
         @isset($slot)

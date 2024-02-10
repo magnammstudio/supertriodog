@@ -8,6 +8,8 @@ use App\Models\vet;
 use Livewire\Component;
 use Illuminate\Support\Str;
 
+use GuzzleHttp\Client as smsClient;
+
 class Rmkt extends Component
 {
     public $currentStep = 1;
@@ -27,7 +29,7 @@ class Rmkt extends Component
     public function mount($phone=null){
         
         $this->data=[
-            'phone'=>$phone??'0809166690',
+            'phone'=>$phone,
         ];
         if($phone == null){
             $this->currentStep=-1;
@@ -67,13 +69,20 @@ class Rmkt extends Component
     public function verifyPhoneNumber(){
         // validate phone number
         $validatedData = $this->validateOnly('data.phone');
+        
         $phone =$this->data['phone'];
         // search for phone number 
         $client=client::where('phone',$phone)->first();
-
         if($client){
             // if have phone send otp and go next
-            $this->currentStep =1;    
+            if(env('SMS_API', false)){
+                $this->sendOTP();
+            }
+            // dd($client,$this->getErrorBag());
+            // go next
+            if($this->getErrorBag()->isEmpty()){
+                $this->currentStep =1;    
+            }
             
             // if(env('SMS_API', false)){
             //     $this->confirmation();
@@ -87,7 +96,14 @@ class Rmkt extends Component
     public function validateOTP(){
         $validatedData = $this->validateOnly('data.pin');
         // check is pin correct
-        if($this->data['pin']==123456){
+        if(env('SMS_API', false)){
+            $otpVerify=$this->verifyOTP();
+        }else{
+
+        }
+
+        // go next
+        if($this->getErrorBag()->isEmpty()&&$otpVerify){
             $this->currentStep =3;
             redirect(route('client.rmkt',['phone'=>$this->data['phone']]));
         }else{
@@ -128,6 +144,69 @@ class Rmkt extends Component
         redirect(route('client.home'));
     }
 
+
+    public function sendOTP(){
+
+        $SMSclient = new smsClient;
+
+        try {
+            $SMSresponse = $SMSclient->request('POST', 'https://otp.thaibulksms.com/v2/otp/request', [
+                'form_params' => [
+                    'key' => getenv('BULKSMS_KEY'),
+                    'secret' => getenv('BULKSMS_SECRET'),
+                    'msisdn' => '+66' . str_replace('-', '', $this->data['phone'])
+                ],
+                'headers' => [
+                    'accept' => 'application/json',
+                    'content-type' => 'application/x-www-form-urlencoded',
+                ],
+            ]);
+            $response=json_decode($SMSresponse->getBody()->getContents());
+            $this->data['token'] = $response->token;
+            $this->data['refno'] = $response->refno;
+            // dd($response);
+        } catch (\Exception $e) {
+            $this->addError('data', $e->getMessage());
+            // $this->errorMessage = $e->getMessage();
+            return false;
+        }
+    }
+
+    public function verifyOTP(){
+        $SMSclient = new smsClient;
+
+        try {
+            $SMSresponse = $SMSclient->request('POST', getenv('OTP_URL').'/v2/otp/verify', [
+            'form_params' => [
+                'key' => getenv('BULKSMS_KEY'),
+                'secret' => getenv('BULKSMS_SECRET'),
+                'token' => $this->data['token'],
+                'pin' => $this->data['pin']
+            ],
+            'headers' => [
+                'accept' => 'application/json',
+                'content-type' => 'application/x-www-form-urlencoded',
+            ],
+            ]);
+        } catch (\Exception $e) {
+            // $this->errorMessage = $e->getMessage();
+            // dd($e->getMessage());
+            $this->addError('data', $e->getMessage());
+            return back()->with('error', $e->getMessage());
+        }
+
+        // dd(json_decode($response->getBody()->getContents()) , $response, $response,$this->status );
+
+        if (json_decode($SMSresponse->getBody()->getContents())->status != 'success') {
+            // $this->errorMessage = 'That code is invalid, please try again.';
+            $this->addError('data','That code is invalid, please try again.');
+            return false;
+        }else{
+            // $this->errorMessage = '';
+            // $this->status = 'approved';
+            return true;
+        }
+    }
 
 
     public function updatedSelectedVetProvince($selected_vet_province){

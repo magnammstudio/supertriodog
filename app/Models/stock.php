@@ -16,6 +16,6 @@ class stock extends Model
     ];
     public function vet()
     {
-        return $this->hasMany(Vet::class);
+        return $this->hasMany(vet::class);
     }
 }

@@ -23,7 +23,7 @@ class vet extends Model
         return $this->hasOne(User::class);
     }
     public function client(){
-        return $this->hasMany(Client::class);
+        return $this->hasMany(client::class);
     }
     public function stock()
     {

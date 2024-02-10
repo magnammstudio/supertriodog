@@ -25,6 +25,6 @@ class rmktClient extends Model
     }
     public function vet()
     {
-        return $this->belongsTo(Vet::class);
+        return $this->belongsTo(vet::class);
     }
 }

@@ -20,25 +20,6 @@ class Register extends Component
     public $vet_list;
     public $selected_vet;
 
-    // public function rules()
-    // {
-    //     return [
-    //         'regClient.firstname' => ['required', 'string', 'max:255'],
-    //         'regClient.lastname' => ['required', 'string', 'max:255'],
-    //         'regClient.email' => ['nullable','email', 'max:255'],
-    //         'regClient.phone' => ['required', 'numeric','digits:10','min:10','regex:/^([0-9\s\(\)]*)$/', 'unique:App\Models\client,phone'],
-    //         'regClient.consent' => ['required','bool'],
-
-    //         'regClient.pet_name' => ['required', 'string', 'max:255'],
-    //         'regClient.pet_breed' => ['required', 'string', 'max:255'],
-    //         'regClient.pet_weight' => ['required', 'string', 'max:255'],
-    //         'regClient.pet_age_year' => ['required', 'numeric'],
-    //         'regClient.pet_age_month' => ['required', 'numeric'],
-
-
-    //         'selected_vet.name'=> ['required']
-    //     ];
-    // }
 
     public function mount(){
         
@@ -58,20 +39,20 @@ class Register extends Component
             'pet_age_month'=>null,
             'vet_id'=>null,
         ];
-        $this->regClient['consent']=true;
+        // $this->regClient['consent']=true;
         // if(!env('SMS_API')){
-            $this->regClient=[
-                'firstname'=>'owner name',
-                'lastname'=>'surename',
-                'phone'=>'0809166690',
-                'email'=>'maggotgluon@gmail.com',
-                'consent'=>true,
-                'pet_name'=>'petname',
-                'pet_breed'=>'breed',
-                'pet_weight'=>'1.25-2.5 กก.',
-                'pet_age_year'=>1,
-                'pet_age_month'=>'1',
-                'vet_id'=>null];
+            // $this->regClient=[
+            //     'firstname'=>'owner name',
+            //     'lastname'=>'surename',
+            //     'phone'=>'0809166690',
+            //     'email'=>'maggotgluon@gmail.com',
+            //     'consent'=>true,
+            //     'pet_name'=>'petname',
+            //     'pet_breed'=>'breed',
+            //     'pet_weight'=>'1.25-2.5 กก.',
+            //     'pet_age_year'=>1,
+            //     'pet_age_month'=>'1',
+            //     'vet_id'=>null];
         // }
         $this->selected_vet=[
             'province'=>null,

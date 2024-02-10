@@ -43,7 +43,7 @@
                             เข้าโปรแกรม {{env('APP_NAME','-')}}<br>
                             โปรแกรมปกป้องปรสิตสำหรับคนรักแมว
                         </p>
-                        {{-- <p>ไม่พบข้อมูลลงทะเบียน</p> --}}
+                        <x-errors/>
                         <x-input label="หมายเลขโทรศัพท์" maxlength="10" minlength="10" placeholder="หมายเลขโทรศัพท์"
                             pattern="[0-9]*" inputmode="tel" required wire:model.defer="data.phone" />
                     </div>
@@ -74,7 +74,14 @@
                 <div class="setup-content min-h-[70vh] flex flex-col transition-all">
                     <div class="mt-8 pb-2">
                         <h3 class="text-center text-xl pb-2 font-bold"> ยืนยัน OTP </h3>
-                        <p class="text-center"> เราได้ส่ง SMS ไปยังหมายเลข {{ $data['phone'] ?? '-' }}</p>
+                        <p class="text-center"> 
+                            เราได้ส่ง SMS ไปยังหมายเลข {{ $data['phone'] ?? '-' }}
+
+                            @isset($data['refno'])
+                                <br>Ref. {{$data['refno']??''}}
+                            @endisset
+                        </p>
+
                     </div>
                     <div class="single-input-container flex gap-2 my-8">
                         <x-input wire:model.defer="data.pin" type="text" maxlength="6" inputmode="numeric" 
