@@ -20,8 +20,8 @@ class Dashboard extends Component
         $client=clientModel::all();
         $this->static=[
             'client'=>$client->count(),
-            'client_activated'=>$client->countBy('active_status')['activated'],
-            'client_pending'=>$client->countBy('active_status')['pending'],
+            'client_activated'=>$client->countBy('active_status')['activated']??0,
+            'client_pending'=>$client->countBy('active_status')['pending']??0,
             'client_option_1'=>$client->count('option_1'),
             'client_option_2'=>$client->count('option_2'),
             'client_option_3'=>$client->count('option_3'),
