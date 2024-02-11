@@ -37,11 +37,6 @@ class Dashboard extends Component
     }
     public function render()
     {
-        // dd(clientModel::with('vet')->whereHas('vet',function($query){
-        //     $query->where('vet_name','เอกภพรักษาสัตว์');
-        // })->get()
-        // ,vet::where('vet_name','เอกภพรักษาสัตว์')->get()
-        // );
         return view('livewire.admin.dashboard',[
             'clients'=>clientModel::with('vet')
             ->when($this->search['text']!=null,function($queryString){
@@ -58,5 +53,8 @@ class Dashboard extends Component
             })->orderBy('updated_at','DESC')
             ->paginate($this->search['paginate'])
         ])->extends('layouts.admin');
+    }
+    public function delete (clientModel $client){
+        $client->delete();
     }
 }

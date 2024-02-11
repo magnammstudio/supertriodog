@@ -22,6 +22,7 @@ use App\Mail\mailRemarketing;
 use App\Models\client;
 use App\Models\rmktClient;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 
@@ -38,10 +39,12 @@ use Illuminate\Support\Facades\Route;
 
 // Route::view('/', 'welcome')->name('home');
 Route::get('/dev', function(){
-    $c = \App\Models\client::with('vet')->where('phone','0809166690')->first();
-    $v = \App\Models\vet::with('stock')->find($c->vet)->first();
-    $s = $v->stockLeft();
-    dd($c,$v->stock->total_stock,$s);
+    
+    // dd(Hash::make('catPlus'));
+    // $c = \App\Models\client::with('vet')->where('phone','0809166690')->first();
+    // $v = \App\Models\vet::with('stock')->find($c->vet)->first();
+    // $s = $v->stockLeft();
+    // dd($c,$v->stock->total_stock,$s);
 });
 Route::get('/', ClientRegister::class)->name('home');
 
@@ -68,7 +71,7 @@ Route::name('test.')->prefix('test')->group(function (){
     Route::view('email/','email.index');
     Route::view('email/confirmation','email.confirmation',['client'=>client::find(1)])->name('email.confirmation');
     Route::view('email/rmkt/{phone?}','email.remarketing',['client'=>client::find(1)])->name('email.remarketing');
-    
+    // Route::get(function () {
     Route::fallback(function () {
         $c=client::whereDate('updated_at',now()->addDay(-5))->get();
         $clients = rmktClient::whereDate('updated_at',today())->distinct('client_id')->get();

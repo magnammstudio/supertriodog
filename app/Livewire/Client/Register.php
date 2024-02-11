@@ -2,12 +2,14 @@
 
 namespace App\Livewire\Client;
 
+use App\Mail\mailConfirmation;
 use App\Models\client as clientModel;
 use App\Models\vet;
 use Livewire\Component;
 use Illuminate\Support\Str;
 
 use GuzzleHttp\Client as smsClient;
+use Illuminate\Support\Facades\Mail;
 
 class Register extends Component
 {
@@ -41,18 +43,18 @@ class Register extends Component
         ];
         // $this->regClient['consent']=true;
         // if(!env('SMS_API')){
-            // $this->regClient=[
-            //     'firstname'=>'owner name',
-            //     'lastname'=>'surename',
-            //     'phone'=>'0809166690',
-            //     'email'=>'maggotgluon@gmail.com',
-            //     'consent'=>true,
-            //     'pet_name'=>'petname',
-            //     'pet_breed'=>'breed',
-            //     'pet_weight'=>'1.25-2.5 กก.',
-            //     'pet_age_year'=>1,
-            //     'pet_age_month'=>'1',
-            //     'vet_id'=>null];
+            $this->regClient=[
+                'firstname'=>'owner name',
+                'lastname'=>'surename',
+                'phone'=>'0809166690',
+                'email'=>'maggotgluon@gmail.com',
+                'consent'=>true,
+                'pet_name'=>'petname',
+                'pet_breed'=>'breed',
+                'pet_weight'=>'1.25-2.5 กก.',
+                'pet_age_year'=>1,
+                'pet_age_month'=>'1',
+                'vet_id'=>null];
         // }
         $this->selected_vet=[
             'province'=>null,
@@ -184,7 +186,7 @@ class Register extends Component
         } catch (\Exception $e) {
             $this->addError('regClient', $e->getMessage());
             $this->errorMessage = $e->getMessage();
-            return false;
+            return back()->with('error', $e->getMessage());
         }
     }
 
@@ -233,9 +235,10 @@ class Register extends Component
         ];
 
         try {
-            // if($this->email){
-            //     SendEmail::dispatch($details);
-            // }
+            if($this->regClient['email']){
+                $mail = new mailConfirmation($details);
+                Mail::to($this->regClient['email'])->send($mail);
+            }
             $body_sms = 'ยืนยันลงทะเบียนสำเร็จ ใช้สิทธิ์คลิก '.route('client.login');
             $SMSclient = new smsClient;
             

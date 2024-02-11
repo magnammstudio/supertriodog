@@ -1,13 +1,6 @@
 <div class="text-content-dark relative min-h-[50vh]">
-    {{-- @isset($regClient)
-        <div class="absolute top-1 left-1 bg-white/50">
-            @foreach ($regClient as $key=>$val)
-            {{$key}}:{{$val}}<br>
-            @endforeach
-        </div>
-    @endisset --}}
 
-    <div class="text-center absolute inset-0 z-50 {{$currentStep>1? '' : 'hidden'}}" wire:loading>
+    <div class="text-center absolute inset-0 z-50 {{$currentStep>=1? '' : 'hidden'}}" wire:loading>
         <img class="m-auto" src="{{asset('/img/loading.gif')}}"/>
     </div>
     {{-- progress bar --}}
@@ -108,8 +101,6 @@
         </div>
         <div class="single-input-container flex gap-2 my-8">
             <x-input wire:model.defer="regClient.pin" type="text" maxlength="6" inputmode="numeric" />
-        {{-- <input wire:model.defer="regClient.pin" type="text" maxlength="6" inputmode="numeric"
-            class="{{$status=='error'?'border-secondary-red ring-2 ring-secondary-red':'border-gray-300'}} text-center focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm block mt-1 w-full" /> --}}
         </div>
         
         @if ($status == 'error')
@@ -117,8 +108,6 @@
 
         <x-button lg outline icon="chevron-left" primary class="py-2 rounded-2xl" wire:click="back(1)" type="button" label="Back" />
         @endif
-        <!-- <input wire:model="code" type="text" class="border-gray-300 text-center focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm block mt-1 w-full"/> -->
-        <!-- <x-button wire:click="verifyCode" type="button" label="verifyCode" /> -->
 
         <div class="py-2 text-center mt-auto" wire:loading.remove>
             <x-button lg right-icon="chevron-right" primary class="bg-gradient-to-br from-gradient-start to-gradient-end rounded-2xl"

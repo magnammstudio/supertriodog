@@ -41,8 +41,6 @@ class Vet extends Component
         $vetStock->save();
 
         $this->stock = $this->vet->withCurrentStock();
-        // dd($vetStock);
-        // dd($validatedData,stock::find($this->vet->id));
         
     }
 }

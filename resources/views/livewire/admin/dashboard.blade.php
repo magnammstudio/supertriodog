@@ -147,7 +147,10 @@
                                 
                         </td>
                         <td class="align-top sm:border border-primary-blue p-2 ml-2 table sm:table-cell">
-                            {{$client->name}}
+                            {{$client->name}} 
+                            @if (Auth::user()->isAdmin)
+                                <x-button label="x" wire:click="delete({{$client}})"/>
+                            @endif
                         </td>
                         <td class="align-top sm:border border-primary-blue p-2 ml-2 table sm:table-cell">
                             <span class="sm:hidden inline-block min-w-max mr-2">น้ำหนัก สุนัข</span>
