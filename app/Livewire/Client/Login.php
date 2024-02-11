@@ -10,7 +10,6 @@ class Login extends Component
     public $phone;
     public $error=null;
     public function mount($phone=null){
-        
         if($phone){
             $this->phone=$phone;
             $this->login();

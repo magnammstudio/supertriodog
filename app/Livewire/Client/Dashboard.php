@@ -18,16 +18,33 @@ class Dashboard extends Component
     public function mount($phone=null){
         // dd($phone);
         // $this->client=client::with('vet')->where('phone',$phone)->first();
-        $this->client=client::where('phone',$phone)->first();
+        $client=client::where('phone',$phone)->first();
+        //    dd($client==null) ;
+        if($client==null){
+            return redirect(route('client.login'));
+        }
+        
+        $this->client = $client;
 
         $this->request=[
-            'vet_id'=>$this->client->vet_id,
+            'vet_id'=>null,
             'offer'=>null,
             'offer_1'=>null,
             'offer_2'=>null,
             'offer_3'=>null,
             'offer_month'=>null,
         ];
+
+        if(!env('SMS_API')){
+            $this->request=[
+                'vet_id'=>$this->client->vet_id,
+                'offer'=>null,
+                'offer_1'=>null,
+                'offer_2'=>null,
+                'offer_3'=>null,
+                'offer_month'=>null,
+            ];
+        }
 
         if($this->client->active_status=='activated' 
         && $this->client->active_date!=null){
@@ -64,6 +81,8 @@ class Dashboard extends Component
             'request.offer_2'=>[Rule::requiredIf(function(){return $this->request['offer_1']==null && $this->request['offer_3']==null;})],
             'request.offer_3'=>[Rule::requiredIf(function(){return $this->request['offer_1']==null && $this->request['offer_2']==null;})],
             // 'request.offer_month'=>['required_unless:request.offer_3,null'],
+        ],[
+            'request.*'=>'จำเป็นต้องระบุ',
         ]);
         // dd($validatedData);
         if($this->client->vet_id == $this->request['vet_id']){
@@ -79,6 +98,7 @@ class Dashboard extends Component
         }else{
             $this->status=-1;
             $this->error="error";
+            $this->addError('request', 'error');
         }
     }
     public function step($goto=null){

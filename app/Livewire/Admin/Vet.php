@@ -33,7 +33,9 @@ class Vet extends Component
     }
     public function add_stock_adj(){
         $validatedData = $this->validate([
-            'stock_adj'=>['required'],
+            'stock_adj'=>['required','numeric'],
+        ],[
+            'stock_adj.*'=>'กรุณาระบุ'
         ]);
         $vetStock=stock::find($this->vet->stock_id);
         $vetStock->total_stock+=$this->stock_adj;
