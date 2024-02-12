@@ -116,14 +116,22 @@
                     label="รับคำปรึกษาและเข้าร่วมโปรแกรม {{env('APP_NAME')}}" description="ไม่สามารถเลือกได้" />
             </span>
             @else
-                {{-- <span class="p-2 block"><x-checkbox lg class="rounded-full" label="รับคำปรึกษาและเข้าร่วมโปรแกรม Super TRIO"
-                    id="standard"    wire:model.lazy="request.offer_1" /></span>
+                @if (env('VET_OPTION_1',true))
+                    <span class="p-2 block"><x-checkbox lg class="rounded-full" label="รับคำปรึกษาและเข้าร่วมโปรแกรม Super TRIO"
+                        id="standard"    wire:model.lazy="request.offer_1" /></span>
+                @endif
+                @if (env('VET_OPTION_2',true))
                 <span class="p-2 block"><x-checkbox lg class="rounded-full" label="รับคำปรึกษาและเข้าร่วมโปรแกรม {{env('APP_NAME')}}"
-                    id="extra_1" wire:model.live="request.offer_2" /></span> --}}
+                    id="extra_1" wire:model.live="request.offer_2" /></span>
+                @endif
+
+                @if (env('VET_OPTION_3',true))
                 <span class="p-2 block"><x-checkbox lg class="rounded-full" value=3 label="รับสิทธิ์พิเศษเพิ่มเติม - เข้าโปรแกรม {{ $request['offer_month']??3 }} เดือน"
                     id="extra_2" wire:model.live="request.offer_3" /></span>
+                @endif
             @endif
             @if ($request['offer_3'])
+                @if (env('VET_OPTION_3_option',true))
                 <span class="p-2 block">
                     <x-native-select label="ระยะเวลา" placeholder="เลือกระยะเวลา" 
                         :options="[
@@ -141,6 +149,7 @@
                         option-label="name" option-value="value"
                         wire:model.live="request.offer_month" />
                 </span>
+                @endif
             @endif
             
         </div>
