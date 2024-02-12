@@ -31,12 +31,15 @@ class SendRemarketingEmail extends Command
     public function handle()
     {
         //update last 30 day
-        $clients = client::whereDate('updated_at',now()->subDay(30))->get();
+        $clients = client::whereDate('updated_at','<=',now()->subDay(30))->get();
+        $clients = client::whereDate('updated_at','<=',now()->sunDay(1))->get();
         if ($clients->count() > 0) {
             foreach ($clients as $client) {
                 Mail::to($client)->send(new mailRemarketing($client));
                 //send sms
                 //update 
+                $client->updated_at=today();
+                $client->save();
             }
         }
     

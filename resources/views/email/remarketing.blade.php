@@ -5,7 +5,7 @@
         <x-application-logo class="h-20 m-auto"/>
         <div class="p-4 rounded-xl shadow-lg text-center">
             <h1 class="bg-primary-blue text-white text-2xl font-bold p-4 text-center">
-                การลงทะเบียนเสร็จสมบูรณ์
+                Remarketing Test
             </h1>
             <img src="{{asset('img/app-banner.png')}}" class="m-auto w-full"/>
             <p class="max-w-sm m-auto text-center my-4">
