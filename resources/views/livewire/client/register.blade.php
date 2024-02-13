@@ -173,12 +173,14 @@
 
     {{-- vet info --}}
     <div class="row setup-content  min-h-[70vh] flex flex-col {{ $currentStep != 3 ? 'hidden' : '' }} " id="step-3">
-        <div class="mt-8 pb-2">
-            <h3 class="text-center">
+        <div class="mt-8 pb-2 text-center ">
+            <h3 class="font-bold">
                 เลือกคลินิก หรือโรงพยาบาลสัตว์
             </h3>
-            <p class="text-center">ที่ต้องการรับคำปรึกษาและ<br>
-                เข้าร่วมโปรแกรม LOVE solution cat PLUS</p>
+            <p>ที่ต้องการรับคำปรึกษาและ<br>
+                เข้าร่วมโปรแกรม LOVE solution cat PLUS<br>
+                กรุณาเลือกที่อยู่ของ <u>คลินิกหรือโรงพยาบาลสัตว์ที่ท่านสะดวก</u>
+            </p>
         </div>
 
         
