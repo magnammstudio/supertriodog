@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class client extends Model
 {
     use HasFactory;
+    
     protected $fillable = [
         'client_code',
         'name',
@@ -31,6 +32,10 @@ class client extends Model
         'active_status',
         'remark'
     ];
+
+    // protected $casts = [
+    //     'remark' => 'JSON',
+    // ];
     public function vet()
     {
         return $this->belongsTo(vet::class);

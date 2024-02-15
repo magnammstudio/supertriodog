@@ -45,4 +45,7 @@ class Vet extends Component
         $this->stock = $this->vet->withCurrentStock();
         
     }
+    public function delete (ClientModels $client){
+        $client->delete();
+    }
 }

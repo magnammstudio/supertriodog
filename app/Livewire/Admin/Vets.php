@@ -2,6 +2,8 @@
 
 namespace App\Livewire\Admin;
 
+use App\Models\stock;
+use App\Models\ThailandAddr;
 use App\Models\vet;
 use Livewire\Component;
 
@@ -11,20 +13,23 @@ class Vets extends Component
 {
     use WithPagination;
     public $search;
-    public $stock;
+
+    protected $queryString = [
+        'search.text'=> ['except' => '','as'=>'q'],
+        'search.paginate'=> ['except' => 50,'as'=>'p']
+    ];
+    // public $stock;
     // public $vets;
     public function mount(){
-        $this->stock = vet::with('stock')->get();
-
         $this->search=[
             'text'=>null,
-            'status'=>null,
             'paginate'=>50
         ];
     }
-    public function render()
-    {
+    public function render(){
         return view('livewire.admin.vets',[
+            'addr'=>ThailandAddr::all(),
+            'total_stock'=>stock::sum('total_stock'),
             'vets'=>vet::with('stock')
             ->when($this->search['text']!=null,function($queryString){
                 $text = $this->search['text'];
@@ -36,5 +41,8 @@ class Vets extends Component
                     ->orWhere('stock_id','like','%'.$text.'%');
             })->orderBy('updated_at','DESC')->paginate($this->search['paginate'])
         ])->extends('layouts.admin');
+    }
+    public function updatingSearch(){
+        $this->resetPage();
     }
 }

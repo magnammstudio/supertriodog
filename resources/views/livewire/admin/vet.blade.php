@@ -11,7 +11,7 @@
         <x-badge class="rounded-2xl bg-primary-blue text-white p-4 shadow-lg" label="รหัส : 839703" />
     </div>
     <hr class="border-2 border-primary-blue my-4">
-    <div class="grid sm:grid-cols-2 my-4 gap-4">
+    <div class="grid md:grid-cols-2 my-4 gap-4">
         <div>
             <div class="flex gap-2">
                 <div class=" rounded-2xl bg-primary-blue text-primary-lite/70 p-4 shadow-lg ">
@@ -106,122 +106,107 @@
         <!-- updated_at | desc -->
         <div class="mt-7 overflow-x-auto">
             @if ($vetClients)
-            <table class="min-w-full table-fixed">
+            <table class="min-w-full table-fixed whitespace-nowrap">
                 <thead>
                     <tr class="border border-primary-blue bg-primary-blue  text-xs">
-                        <th class="w-24">
-                            <div class="grid">
-                                <button wire:loading.attr="disabled" wire:loading.class="!cursor-wait" type="button"
-                                    class="outline-none inline-flex justify-center items-center group transition-all ease-in duration-150 focus:ring-2 focus:ring-offset-2 hover:shadow-sm disabled:opacity-80 disabled:cursor-not-allowed rounded gap-x-2 text-sm px-4 py-2     text-white hover:bg-slate-100 ring-slate-200 dark:text-slate-300 dark:hover:bg-slate-700 dark:ring-slate-600 dark:ring-offset-slate-800 w-full hover:bg-white/10"
-                                    wire:click="order('client_code')"> ลำดับ
-                                </button>
+                        <th class="w-6 md:w-24 md:table-cell">
+                                <x-button flat white class="pointer-events-none" label="ลำดับ"/><br>
                                 <x-badge primary label="No" />
-                            </div>
                         </th>
-                        <th class="w-24 hidden sm:table-cell">
-                            <div class="grid">
-                                <button wire:loading.attr="disabled" wire:loading.class="!cursor-wait" type="button"
-                                    class="outline-none inline-flex justify-center items-center group transition-all ease-in duration-150 focus:ring-2 focus:ring-offset-2 hover:shadow-sm disabled:opacity-80 disabled:cursor-not-allowed rounded gap-x-2 text-sm px-4 py-2     text-white hover:bg-slate-100 ring-slate-200 dark:text-slate-300 dark:hover:bg-slate-700 dark:ring-slate-600 dark:ring-offset-slate-800 w-full hover:bg-white/10"
-                                    wire:click="order('updated_at')"> วันที่
-                                </button>
+                        <th class="w-24 hidden md:table-cell">
+                                <x-button flat white class="pointer-events-none" label="วันที่"/><br>
                                 <x-badge primary label="Date" />
-                            </div>
                         </th>
-                        <th class="">
-                            <div class="grid">
-                                <button wire:loading.attr="disabled" wire:loading.class="!cursor-wait" type="button"
-                                    class="outline-none inline-flex justify-center items-center group transition-all ease-in duration-150 focus:ring-2 focus:ring-offset-2 hover:shadow-sm disabled:opacity-80 disabled:cursor-not-allowed rounded gap-x-2 text-sm px-4 py-2     text-white hover:bg-slate-100 ring-slate-200 dark:text-slate-300 dark:hover:bg-slate-700 dark:ring-slate-600 dark:ring-offset-slate-800 w-full hover:bg-white/10"
-                                    wire:click="order('name')"> ชื่อลูกค้า
-                                </button>
+                        <th class="w-full">
+                                <x-button flat white class="pointer-events-none" label="ชื่อลูกค้า"/><br>
                                 <x-badge primary label="Pet owner's Name" />
                             </div>
                         </th>
-                        <th class="w-20 text-primary-lite">
-                            <div class="grid">
-                                <button wire:loading.attr="disabled" wire:loading.class="!cursor-wait" type="button"
-                                    class="outline-none inline-flex justify-center items-center group transition-all ease-in duration-150 focus:ring-2 focus:ring-offset-2 hover:shadow-sm disabled:opacity-80 disabled:cursor-not-allowed rounded gap-x-2 text-sm px-4 py-2     text-white hover:bg-slate-100 ring-slate-200 dark:text-slate-300 dark:hover:bg-slate-700 dark:ring-slate-600 dark:ring-offset-slate-800 pointer-events-none w-full block hover:bg-white/10">
-                                    รับคำปรึกษาและเข้าร่วม โปรแกรม Super TRIO
-                                </button>
+                        <th class="w-20 text-primary-lite hidden md:table-cell">
+                                <x-button flat white class="pointer-events-none" >
+                                    รับคำปรึกษาและเข้าร่วม <br>โปรแกรม {{env('APP_NAME')}}
+                                </x-button>
+                                    <br>
                                 <x-badge primary label="(Get free consultation and a tablet)" />
-                            </div>
                         </th>
-                        <th class="w-20 text-primary-lite hidden sm:table-cell">
-                            <div class="grid">
-                                <button wire:loading.attr="disabled" wire:loading.class="!cursor-wait" type="button"
-                                    class="outline-none inline-flex justify-center items-center group transition-all ease-in duration-150 focus:ring-2 focus:ring-offset-2 hover:shadow-sm disabled:opacity-80 disabled:cursor-not-allowed rounded gap-x-2 text-sm px-4 py-2     text-white hover:bg-slate-100 ring-slate-200 dark:text-slate-300 dark:hover:bg-slate-700 dark:ring-slate-600 dark:ring-offset-slate-800 pointer-events-none w-full block hover:bg-white/10">
-                                    รับสิทธิ์พิเศษเพิ่มเติม - เข้าร่วมโปรแกรม 1 เดือน
-                                </button>
+                        <th class="w-20 text-primary-lite hidden md:table-cell">
+                                <x-button flat white class="pointer-events-none" >
+                                    รับสิทธิ์พิเศษเพิ่มเติม <br> เข้าร่วมโปรแกรม 1 เดือน
+                                </x-button><br>
                                 <x-badge primary label="(Extra tablet sold)" />
                             </div>
                         </th>
-                        <th class="w-20 text-primary-lite hidden sm:table-cell" colspan="2">
-                            <div class="grid">
-                                <button wire:loading.attr="disabled" wire:loading.class="!cursor-wait" type="button"
-                                    class="outline-none inline-flex justify-center items-center group transition-all ease-in duration-150 focus:ring-2 focus:ring-offset-2 hover:shadow-sm disabled:opacity-80 disabled:cursor-not-allowed rounded gap-x-2 text-sm px-4 py-2     text-white hover:bg-slate-100 ring-slate-200 dark:text-slate-300 dark:hover:bg-slate-700 dark:ring-slate-600 dark:ring-offset-slate-800 pointer-events-none w-full block hover:bg-white/10">
-                                    รับสิทธิ์พิเศษเพิ่มเติม - เข้าร่วมโปรแกรม 3 เดือน
-                                </button>
+                        <th class="w-20 text-primary-lite hidden md:table-cell" colspan="2">
+                                <x-button flat white class="pointer-events-none" >
+                                    รับสิทธิ์พิเศษเพิ่มเติม <br> เข้าร่วมโปรแกรม 3 เดือน
+                                </x-button><br>
                                 <x-badge primary label="(Extra box sold)" />
-                            </div>
                         </th>
-                        <th class="w-24 hidden sm:table-cell text-primary-lite">
-                            <div class="grid">
-                                <button wire:loading.attr="disabled" wire:loading.class="!cursor-wait" type="button"
-                                    class="outline-none inline-flex justify-center items-center group transition-all ease-in duration-150 focus:ring-2 focus:ring-offset-2 hover:shadow-sm disabled:opacity-80 disabled:cursor-not-allowed rounded gap-x-2 text-sm px-4 py-2     text-white hover:bg-slate-100 ring-slate-200 dark:text-slate-300 dark:hover:bg-slate-700 dark:ring-slate-600 dark:ring-offset-slate-800 pointer-events-none w-full block hover:bg-white/10">
-                                    น้ำหนัก สุนัข
-                                </button>
+                        <th class="w-24 hidden md:table-cell text-primary-lite">
+                                <x-button flat white class="pointer-events-none" label="น้ำหนัก สุนัข"/><br>
                                 <x-badge primary label="Pet's weight" />
-                            </div>
                         </th>
-                        <th class="w-24 hidden sm:table-cell">
-                            <div class="grid">
-                                <button wire:loading.attr="disabled" wire:loading.class="!cursor-wait" type="button"
-                                    class="outline-none inline-flex justify-center items-center group transition-all ease-in duration-150 focus:ring-2 focus:ring-offset-2 hover:shadow-sm disabled:opacity-80 disabled:cursor-not-allowed rounded gap-x-2 text-sm px-4 py-2     text-white hover:bg-slate-100 ring-slate-200 dark:text-slate-300 dark:hover:bg-slate-700 dark:ring-slate-600 dark:ring-offset-slate-800 w-full hover:bg-white/10"
-                                    wire:click="order('active_status')"> สถานะ
-                                </button>
+                        <th class="w-24 hidden md:table-cell">
+                                <x-button flat white class="pointer-events-none" label="สถานะ"/><br>
                                 <x-badge primary label="Status" />
-                            </div>
                         </th>
                     </tr>
+                    
                 </thead>
                 <tbody>
                     @foreach ($vetClients as $client)
                     <tr class="border border-primary-blue">
-                        <td class="align-top sm:border mx-2 border-primary-blue p-2 table w-full sm:w-auto sm:table-cell">{{$client->client_code}}</td>
-                        <td class="align-top sm:border mx-2 border-primary-blue p-2 table w-full sm:w-auto sm:table-cell">
+                        <td class="align-top md:border mx-2 border-primary-blue p-2 md:w-auto md:table-cell">{{$client->client_code}}</td>
+                        <td class="align-top md:border mx-2 border-primary-blue p-2 block w-full md:w-auto md:table-cell">
                             {{$client->updated_at->format('d/m/y')}}
                         </td>
-                        <td class="align-top border whitespace-nowrap border-primary-blue p-2 sm:table-cell">
+                        <td class="align-top border whitespace-nowrap border-primary-blue p-2 block md:table-cell">
                             {{$client->name}}
-                            <x-badge primary label="{{$client->phone}}" />
+                            <x-button xs primary label="{{$client->phone}}" href="tel:{{$client->phone}}"/>
+                            
+                            @if (Auth::user()->isAdmin)
+                                <x-button xs negative icon="x" wire:click="delete({{$client}})" class="ml-auto" wire:confirm="คุณต้องการยืนยันการลบหรือไม่"/>
+                            @endif
                         </td>
-                        <td class="align-top sm:border mx-2 whitespace-nowrap border-primary-blue p-2 table w-full sm:w-auto sm:table-cell sm:text-center ">
+                        <td class="align-top md:border mx-2 whitespace-nowrap border-primary-blue p-2 hidden w-full md:w-auto md:table-cell md:text-center ">
                             @if($client->option_1)
                             <x-badge.circle positive icon="check" class="w-5 h-5 m-auto p-2 inline-block" />
-                            <span class="sm:hidden inline-block min-w-max mx-2 my-1">เข้าร่วม โปรแกรม Super TRIO</span>
+                            <span class="md:hidden inline-block min-w-max mx-2 my-1">เข้าร่วม โปรแกรม Super TRIO</span>
                             @endif
                         </td>
-                        <td class="align-top sm:border mx-2 whitespace-nowrap border-primary-blue p-2 table w-full sm:w-auto sm:table-cell sm:text-center ">
+                        <td class="align-top md:border mx-2 whitespace-nowrap border-primary-blue p-2 hidden w-full md:w-auto md:table-cell md:text-center ">
                             @if($client->option_2 )
                             <x-badge.circle positive icon="check" class="w-5 h-5 m-auto p-2 inline-block" />
-                            <span class="sm:hidden inline-block min-w-max mx-2 my-1">เข้าร่วมโปรแกรม 1 เดือน</span>
+                            <span class="md:hidden inline-block min-w-max mx-2 my-1">เข้าร่วมโปรแกรม 1 เดือน</span>
                             @endif
                         </td>
-                        <td class="align-top sm:border mx-2 whitespace-nowrap border-primary-blue p-2 table w-full sm:w-auto sm:table-cell sm:text-center ">
+                        <td class="align-top md:border mx-2 whitespace-nowrap border-primary-blue p-2 hidden w-full md:w-auto md:table-cell md:text-center ">
                             @if($client->option_3 )
                             <x-badge.circle positive icon="check" class="w-5 h-5 m-auto p-2 inline-block" />
                             @endif
                         </td>
-                        <td class="align-top sm:border mx-2 whitespace-nowrap border-primary-blue p-2 table w-full sm:w-auto sm:table-cell sm:text-center ">
+                        <td class="align-top md:border mx-2 whitespace-nowrap border-primary-blue p-2 hidden w-full md:w-auto md:table-cell md:text-center ">
                             @if($client->option_3 )
-                            <span class="sm:hidden inline-block min-w-max mx-2 my-1">เข้าร่วมโปรแกรม </span>{{ $client->option_3 }} เดือน
+                            <span class="md:hidden inline-block min-w-max mx-2 my-1">เข้าร่วมโปรแกรม </span>{{ $client->option_3 }} เดือน
                             @endif
 
                         </td>
-                        <td class="align-top sm:border mx-2 whitespace-nowrap border-primary-blue p-2 sm:text-center table w-full sm:w-auto sm:table-cell">
-                            <span class="sm:hidden inline-block min-w-max mx-2 mt-1">น้ำหนัก สุนัข : </span> {{$client->pet_weight}}
+                        <td class="align-top md:border mx-2 whitespace-nowrap border-primary-blue p-2 md:text-center table w-full md:w-auto md:table-cell">
+                            <ul class="md:hidden">
+                                @if($client->option_1)
+                                <li><x-badge.circle positive icon="check" class="w-5 h-5 m-auto p-2 inline-block" /> <span class="md:hidden inline-block min-w-max mx-2 my-1">เข้าร่วม โปรแกรม Super TRIO</span></li>
+                                @endif
+                                @if($client->option_2)
+                                <li><x-badge.circle positive icon="check" class="w-5 h-5 m-auto p-2 inline-block" /> <span class="md:hidden inline-block min-w-max mx-2 my-1">เข้าร่วมโปรแกรม 1 เดือน</span></li>
+                                @endif
+                                @if($client->option_3)
+                                <li><x-badge.circle positive icon="check" class="w-5 h-5 m-auto p-2 inline-block" /> <span class="md:hidden inline-block min-w-max mx-2 my-1">เข้าร่วมโปรแกรม </span>{{ $client->option_3 }} เดือน</span></li>
+                                @endif
+                            </ul>
+                            <span class="md:hidden inline-block min-w-max mx-2 mt-1">น้ำหนัก สุนัข : </span> {{$client->pet_weight}}
                         </td>
-                        <td class="align-top sm:border mx-2 whitespace-nowrap border-primary-blue p-2 sm:text-center table w-full sm:w-auto sm:table-cell">
-                            <span class="sm:hidden inline-block min-w-max mx-2">สถานะ : </span> {{$client->active_status??'-'}}
+                        <td class="align-top md:border mx-2 whitespace-nowrap border-primary-blue p-2 md:text-center table w-full md:w-auto md:table-cell">
+                            <span class="md:hidden inline-block min-w-max mx-2">สถานะ : </span> {{$client->active_status??'-'}}
                         </td>
                     </tr>
                     @endforeach

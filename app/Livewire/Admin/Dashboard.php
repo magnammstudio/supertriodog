@@ -10,10 +10,15 @@ use Livewire\WithPagination;
 class Dashboard extends Component
 {
     public $search;
-    protected $queryString = ['search'];
     public $static;
     public $vets;
     
+    protected $queryString = [
+        'search.text'=> ['except' => '','as'=>'q'],
+        'search.status'=> ['except' => '','as'=>'s'],
+        'search.paginate'=> ['except' => 50,'as'=>'p']
+    ];
+
     use WithPagination;
 
     public function mount(){
@@ -32,18 +37,17 @@ class Dashboard extends Component
         $this->search=[
             'text'=>null,
             'status'=>null,
-            'paginate'=>25
+            'paginate'=>50
         ];
     }
-    public function render()
-    {
+    public function render(){
         return view('livewire.admin.dashboard',[
             'clients'=>clientModel::with('vet')
             ->when($this->search['text']!=null,function($queryString){
                 // dd($queryString->get());
                 $text = $this->search['text'];
                 // dd($text);
-                return $queryString->where('name','like','%'.$text.'%')
+                return $queryString->orWhere('name','like','%'.$text.'%')
                     ->orWhere('vet_id','like','%'.$text.'%')
                     ->orWhere('phone','like','%'.$text.'%');
             })
@@ -53,6 +57,9 @@ class Dashboard extends Component
             })->orderBy('updated_at','DESC')
             ->paginate($this->search['paginate'])
         ])->extends('layouts.admin');
+    }
+    public function updatingSearch(){
+        $this->resetPage();
     }
     public function delete (clientModel $client){
         $client->delete();

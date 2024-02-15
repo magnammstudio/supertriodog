@@ -19,6 +19,10 @@ class vet extends Model
         'stock_id',
     ];
 
+    protected $casts = [
+        'id'=>'string',
+        'vet_remark'=>'array'
+    ];
     public function user(){
         return $this->hasOne(User::class);
     }

@@ -42,8 +42,8 @@
     </div>
 
     {{-- {{$search['text']}} --}}
-    <div class="flex gap-2 py-4">
-        <x-input label="search" wire:model.live.debounce.700ms="search.text">
+    <div class="flex gap-2 py-4 flex-wrap sm:flex-nowrap justify-between">
+        <x-input label="ค้นหา" wire:model.live.debounce.700ms="search.text" hint="ค้นหา ชื่อลูกค้า หมายเลขโทรศัพท์ หรือรหัสสถานพยาบาล">
             <x-slot name="append">
                 <div class="absolute inset-y-0 right-0 flex items-center p-0.5">
                     <x-button flat icon="search"/>
@@ -51,18 +51,21 @@
             </x-slot>
         </x-input>
 
+        <span class="sm:w-44">
         <x-native-select
-        
-            label="Select Status"
-            placeholder="Select one status"
+            label="สถานะ"
+            placeholder="แสดงทั้งหมด"
             :options="['Activated', 'Pending']"
             wire:model.live="search.status"
         />
+        </span>
+        <span class="sm:w-44">
         <x-native-select
             label="จำนวนที่แสดง"
             :options="[25,50,100,250]"
             wire:model.live="search.paginate"
         />
+        </span>
     </div> 
     <div class="overflow-x-auto">
         <table class="table-fixed min-w-full whitespace-nowrap">
@@ -74,13 +77,13 @@
                             <x-badge primary label="No"/>
                         </div>
                     </th>
-                    <th class="hidden sm:table-cell">
+                    <th class="hidden md:table-cell">
                         <div class="grid">
                             <x-button primary-blue flat class="pointer-events-none text-white hover:bg-white/20"  label="วันที่"/>
                             <x-badge primary label="Date"/>
                         </div>
                     </th>
-                    <th class="hidden sm:table-cell">
+                    <th class="hidden md:table-cell">
                         <div class="grid">
                             <x-button primary-blue flat class="pointer-events-none text-white hover:bg-white/20"  label="ชื่อคลินิก"/>
                             <x-badge primary label="Clinic/Hospital"/>
@@ -92,37 +95,37 @@
                             <x-badge primary label="Pet owner's Name"/>
                         </div>
                     </th>
-                    <th class="hidden sm:table-cell">
+                    <th class="hidden md:table-cell">
                         <div class="grid">
                             <x-button primary-blue flat class="pointer-events-none text-white hover:bg-white/20"  label="น้ำหนัก สุนัข"/>
                             <x-badge primary label="Pet's weight"/>
                         </div>
                     </th>
-                    <th class="hidden sm:table-cell">
+                    <th class="hidden md:table-cell">
                         <div class="grid">
                             <x-button primary-blue flat class="pointer-events-none text-white hover:bg-white/20"  label="สถานะ"/>
                             <x-badge primary label="Status"/>
                         </div>
                     </th>
-                    <th class="hidden sm:table-cell">
+                    <th class="hidden md:table-cell">
                         <div class="grid">
                             <x-button primary-blue flat class="pointer-events-none text-white hover:bg-white/20"  label="สิทธิ์ทั้งหมด"/>
                             <x-badge primary label="All Quota"/>
                         </div>
                     </th>
-                    <th class="hidden sm:table-cell">
+                    <th class="hidden md:table-cell">
                         <div class="grid">
                             <x-button primary-blue flat class="pointer-events-none text-white hover:bg-white/20"  label="สิทธิ์คงเหลือ"/>
                             <x-badge primary label="Remaining Quota"/>
                         </div>
                     </th>
-                    <th class="hidden sm:table-cell">
+                    <th class="hidden md:table-cell">
                         <div class="grid">
                             <x-button primary-blue flat class="pointer-events-none text-white hover:bg-white/20"  label="สิทธิ์ที่รับแล้ว"/>
                             <x-badge primary label="Redeemed"/>
                         </div>
                     </th>
-                    <th class="hidden sm:table-cell">
+                    <th class="hidden md:table-cell">
                         <div class="grid">
                             <x-button primary-blue flat class="pointer-events-none text-white hover:bg-white/20"  label="สินค้าขาด"/>
                             <x-badge primary label="Out of quota"/>
@@ -139,51 +142,51 @@
                         <td class="align-top border border-primary-blue p-2">
                             {{$client->client_code}}
                         </td>
-                        <td class="align-top sm:border border-primary-blue p-2 ml-2 table sm:table-cell">
-                            {{$client->created_at->toDateString()}}
+                        <td class="align-top md:border border-primary-blue p-2 ml-2 table md:table-cell">
+                            <span class="md:hidden inline-block min-w-max mr-2">วันที่</span> {{$client->created_at->toDateString()}}
                         </td>
-                        <td class="align-top sm:border border-primary-blue p-2 ml-2 table sm:table-cell">
+                        <td class="align-top md:border border-primary-blue p-2 ml-2 table md:table-cell">
                             <x-button flat label="{{$vets->where('id',$client->vet_id)->first()->vet_name}}" :href="route('admin.vet',['id'=>$client->vet->id])" />
                                 
                         </td>
-                        <td class="align-top sm:border border-primary-blue p-2 ml-2 table sm:table-cell">
+                        <td class="align-top md:border border-primary-blue p-2 ml-2 table md:table-cell">
                             {{$client->name}} 
                             @if (Auth::user()->isAdmin)
-                                <x-button label="x" wire:click="delete({{$client}})"/>
+                                <x-button label="x" wire:click="delete({{$client}})" wire:confirm="คุณต้องการยืนยันการลบหรือไม่"/>
                             @endif
                         </td>
-                        <td class="align-top sm:border border-primary-blue p-2 ml-2 table sm:table-cell">
-                            <span class="sm:hidden inline-block min-w-max mr-2">น้ำหนัก สุนัข</span>
+                        <td class="align-top md:border border-primary-blue p-2 ml-2 table md:table-cell">
+                            <span class="md:hidden inline-block min-w-max mr-2">น้ำหนัก สุนัข</span>
                             {{$client->pet_weight}}
                         </td>
-                        <td class="align-top sm:border border-primary-blue p-2 ml-2 table sm:table-cell">
-                            <span class="sm:hidden inline-block min-w-max mr-2">สถานะ</span>
+                        <td class="align-top md:border border-primary-blue p-2 ml-2 table md:table-cell">
+                            <span class="md:hidden inline-block min-w-max mr-2">สถานะ</span>
                             {{$client->active_status}}
                         </td>
-                        <td class="align-top text-center sm:border border-primary-blue p-2 ml-2 table sm:table-cell">
+                        <td class="align-top text-center md:border border-primary-blue p-2 ml-2 table md:table-cell">
                             <!-- สิทธิ์ทั้งหมด -->
                             <!-- total stock a -->
-                            <span class="sm:hidden inline-block min-w-max mr-2">สิทธิ์ทั้งหมด</span>
+                            <span class="md:hidden inline-block min-w-max mr-2">สิทธิ์ทั้งหมด</span>
                             {{$vets->find($client->vet_id)->stock->total_stock }}
                             
                         </td>
-                        <td class="align-top text-center sm:border border-primary-blue p-2 ml-2 table sm:table-cell">
+                        <td class="align-top text-center md:border border-primary-blue p-2 ml-2 table md:table-cell">
                             <!-- สิทธิ์ลงเหลือ -->
                             <!-- total stock - total activate -->
-                            <span class="sm:hidden inline-block min-w-max mr-2">สิทธิ์คงเหลือ</span>
+                            <span class="md:hidden inline-block min-w-max mr-2">สิทธิ์คงเหลือ</span>
                             {{$vets->find($client->vet_id)->stock->total_stock - $vets->find($client->vet_id)->withCurrentStock()->sum('opt_1_act') }}
                             
                             {{-- {{$client->vet->stockRemaining()>0?$client->vet->stockRemaining():'-'}} --}}
                         </td>
-                        <td class="align-top text-center sm:border border-primary-blue p-2 ml-2 table sm:table-cell">
+                        <td class="align-top text-center md:border border-primary-blue p-2 ml-2 table md:table-cell">
                             <!-- สิทธิ์ที่รับแล้ว	 -->
                             <!-- total activate -->
-                            <span class="sm:hidden inline-block min-w-max mr-2">สิทธิ์ที่รับแล้ว</span>
+                            <span class="md:hidden inline-block min-w-max mr-2">สิทธิ์ที่รับแล้ว</span>
                             {{$vets->find($client->vet_id)->withCurrentStock()->sum('opt_1_act') }}
                             {{-- {{$client->vet->stockRedeemed()}} --}}
                         </td>
-                        <td class="align-top text-center sm:border border-primary-blue p-2 ml-2 table sm:table-cell">
-                            <span class="sm:hidden inline-block min-w-max mr-2">สินค้าขาด</span>
+                        <td class="align-top text-center md:border border-primary-blue p-2 ml-2 table md:table-cell">
+                            <span class="md:hidden inline-block min-w-max mr-2">สินค้าขาด</span>
                             @if ($vets->find($client->vet_id)->stock->total_stock - $vets->find($client->vet_id)->withCurrentStock()->sum('opt_1') < 0)
                                 {{$vets->find($client->vet_id)->stock->total_stock - $vets->find($client->vet_id)->withCurrentStock()->sum('opt_1') }}
                             @else
