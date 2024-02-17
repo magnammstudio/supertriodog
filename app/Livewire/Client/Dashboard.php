@@ -72,7 +72,7 @@ class Dashboard extends Component
         $this->request['offer_1']=$this->request['offer_1']??null;
         $this->request['offer_2']=$this->request['offer_2']??null;
         $this->request['offer_3']=$this->request['offer_3']??null;
-        $this->request['offer_month']=$this->request['offer_3']?3:null;
+        // $this->request['offer_month']=$this->request['offer_3']?3:null;
         // $this->request['offer_month']=$this->request['offer_3']?$this->request['offer_month']:null;
         // dd($this->request['offer_2']==null && $this->request['offer_3']==null);
         $validatedData = $this->validate([
@@ -80,15 +80,15 @@ class Dashboard extends Component
             'request.offer_1'=>[Rule::requiredIf(function(){return $this->request['offer_2']==null && $this->request['offer_3']==null;})],
             'request.offer_2'=>[Rule::requiredIf(function(){return $this->request['offer_1']==null && $this->request['offer_3']==null;})],
             'request.offer_3'=>[Rule::requiredIf(function(){return $this->request['offer_1']==null && $this->request['offer_2']==null;})],
-            // 'request.offer_month'=>['required_unless:request.offer_3,null'],
+            'request.offer_month'=>['required_unless:request.offer_3,null'],
         ],[
             'request.*'=>'จำเป็นต้องระบุ',
+            'request.offer_month.*'=>'กรุณาระบุจำนวนเดือน',
         ]);
-        // dd($validatedData);
         if($this->client->vet_id == $this->request['vet_id']){
             $this->client->option_1=$this->request['offer_1']??null;
             $this->client->option_2=$this->request['offer_2']??null;
-            $this->client->option_3=$this->request['offer_3']?$this->request['offer_month']:null;
+            $this->client->option_3=$this->request['offer_month']??null;
 
             $this->client->active_status = 'activated';
             $this->client->active_date = now();
