@@ -5,6 +5,8 @@ namespace App\Livewire\Admin;
 use App\Models\stock;
 use App\Models\ThailandAddr;
 use App\Models\vet;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 use Livewire\Component;
 
 use Livewire\WithPagination;
@@ -21,6 +23,11 @@ class Vets extends Component
     // public $stock;
     // public $vets;
     public function mount(){
+        // dd(Auth::user()->vet->count());
+        
+        if(!Gate::allows('isAdmin', Auth::user())){
+            return redirect()->route('admin.vet' ,['id'=>Auth::user()->email]);
+        }
         $this->search=[
             'text'=>null,
             'paginate'=>50

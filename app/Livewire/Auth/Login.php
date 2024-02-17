@@ -42,8 +42,12 @@ class Login extends Component
 
             return;
         }
-
-        return redirect()->intended(route('home'));
+        // dd(Auth::user()->isAdmin);
+        if(Auth::user()->isAdmin){
+            return redirect()->intended(route('admin.home'));
+        }else{
+            return redirect()->intended(route('admin.vet',[Auth::user()->email]));
+        }
     }
 
     public function render()

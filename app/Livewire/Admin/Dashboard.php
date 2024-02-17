@@ -4,6 +4,8 @@ namespace App\Livewire\Admin;
 
 use App\Models\client as clientModel;
 use App\Models\vet;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -22,6 +24,10 @@ class Dashboard extends Component
     use WithPagination;
 
     public function mount(){
+
+        if(!Gate::allows('isAdmin', Auth::user())){
+            redirect()->route('admin.vet' ,['id'=>Auth::user()->email]);
+        }
         $client=clientModel::all();
         $this->static=[
             'client'=>$client->count(),
