@@ -24,7 +24,7 @@ class Dashboard extends Component
     use WithPagination;
 
     public function mount(){
-        if(Auth::user()->isVet()){
+        if(!Auth::user()->isAdmin){
             return redirect()->route('admin.vet' ,['id'=>Auth::user()->id]);
         }
         $client=clientModel::all();

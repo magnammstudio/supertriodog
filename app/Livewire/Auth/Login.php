@@ -36,10 +36,10 @@ class Login extends Component
             return;
         }
         // dd(Auth::user()->isAdmin);
-        if(Auth::user()->isVet()){
-            return redirect()->intended(route('admin.vet',[Auth::user()->id]));
-        }else{
+        if(Auth::user()->isAdmin){
             return redirect()->intended(route('admin.home'));
+        }else{
+            return redirect()->intended(route('admin.vet',[Auth::user()->id]));
         }
     }
 
