@@ -97,8 +97,8 @@ class Dashboard extends Component
             $this->step(6);
         }else{
             $this->status=-1;
-            $this->error="error";
-            $this->addError('request', 'error');
+            // $this->error="error";
+            $this->addError('request.vet_id', 'รหัสคลินิก หรือ โรงพยาบาลสัตว์ ไม่ถูกต้อง');
         }
     }
     public function step($goto=null){
