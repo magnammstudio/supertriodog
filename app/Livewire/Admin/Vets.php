@@ -23,10 +23,8 @@ class Vets extends Component
     // public $stock;
     // public $vets;
     public function mount(){
-        // dd(Auth::user()->vet->count());
-        
-        if(!Gate::allows('isAdmin', Auth::user())){
-            return redirect()->route('admin.vet' ,['id'=>Auth::user()->email]);
+        if(Auth::user()->isVet()){
+            return redirect()->route('admin.vet' ,['id'=>Auth::user()->id]);
         }
         $this->search=[
             'text'=>null,

@@ -24,9 +24,8 @@ class Dashboard extends Component
     use WithPagination;
 
     public function mount(){
-
-        if(!Gate::allows('isAdmin', Auth::user())){
-            redirect()->route('admin.vet' ,['id'=>Auth::user()->email]);
+        if(Auth::user()->isVet()){
+            return redirect()->route('admin.vet' ,['id'=>Auth::user()->id]);
         }
         $client=clientModel::all();
         $this->static=[

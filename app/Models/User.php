@@ -40,12 +40,23 @@ class User extends Authenticatable
      * @var array<string, string>
      */
     protected $casts = [
+        'id'=>'string',
+        'isAdmin'=>'bool',
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
 
 
     public function vet(){
-        return $this->hasMany(vet::class);
+        return $this->hasMany(vet::class,'user_id','id');
+    }
+
+    public function isVet(){
+        $isVet = $this->vet()->count()>0;
+        return $isVet;
+    }
+    public function haveNoVet(){
+        $isVet = $this->vet()->count()==0;
+        return $isVet;
     }
 }

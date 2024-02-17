@@ -24,13 +24,6 @@ class Login extends Component
     public function authenticate()
     {
         $this->validate();
-        // dd(
-        //     $this->username,(
-        //         Auth::attempt(['id' => $this->username,'password' => $this->password], $this->remember)||
-        //         Auth::attempt(['name' => $this->username,'password' => $this->password], $this->remember)||
-        //         Auth::attempt(['email' => $this->username, 'password' => $this->password], $this->remember)
-        //     )
-        // );
         if (!
             (
                 Auth::attempt(['id' => $this->username,'password' => $this->password], $this->remember)||
@@ -43,10 +36,10 @@ class Login extends Component
             return;
         }
         // dd(Auth::user()->isAdmin);
-        if(Auth::user()->isAdmin){
-            return redirect()->intended(route('admin.home'));
+        if(Auth::user()->isVet()){
+            return redirect()->intended(route('admin.vet',[Auth::user()->id]));
         }else{
-            return redirect()->intended(route('admin.vet',[Auth::user()->email]));
+            return redirect()->intended(route('admin.home'));
         }
     }
 
