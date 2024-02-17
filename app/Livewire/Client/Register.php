@@ -26,9 +26,8 @@ class Register extends Component
     public function mount(){
         
         $vet=vet::all();
-        $this->vet_list['province'] = $vet->unique('vet_province')->sortBy('vet_province')->pluck('vet_province');
+        $this->vet_list['province'] = $vet->whereNotIn('vet_province',['กรุงเทพมหานคร'])->unique('vet_province')->sortBy('vet_province')->pluck('vet_province');
         $this->vet_list['province']->prepend('กรุงเทพมหานคร');
-
         $this->vet_list['name'] = $vet->pluck('vet_name','id');
         $this->regClient=[
             'firstname'=>null,
