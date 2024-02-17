@@ -3,7 +3,6 @@
 namespace App\Livewire\Admin;
 
 use App\Models\stock;
-use App\Models\ThailandAddr;
 use App\Models\vet;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
@@ -33,7 +32,6 @@ class Vets extends Component
     }
     public function render(){
         return view('livewire.admin.vets',[
-            'addr'=>ThailandAddr::all(),
             'total_stock'=>stock::sum('total_stock'),
             'vets'=>vet::with('stock')
             ->when($this->search['text']!=null,function($queryString){
