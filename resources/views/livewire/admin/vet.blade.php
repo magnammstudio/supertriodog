@@ -8,7 +8,7 @@
                 {{$vet->vet_area}} {{$vet->vet_city}} {{$vet->vet_province}}
             </p>
         </div>
-        <x-badge class="rounded-2xl bg-primary-blue text-white p-4 shadow-lg" label="รหัส : 839703" />
+        <x-badge class="rounded-2xl bg-primary-blue text-white p-4 shadow-lg" label="รหัส : {{$vet->id}}" />
     </div>
     <hr class="border-2 border-primary-blue my-4">
     <div class="grid md:grid-cols-2 my-4 gap-4">

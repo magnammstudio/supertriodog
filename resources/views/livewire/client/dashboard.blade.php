@@ -126,7 +126,7 @@
                 @endif
 
                 @if (env('VET_OPTION_3',true))
-                <span class="p-2 block"><x-checkbox lg class="rounded-full" value=3 label="รับสิทธิ์พิเศษเพิ่มเติม - เข้าโปรแกรม {{ $request['offer_month']??3 }} เดือน"
+                <span class="p-2 block"><x-checkbox lg class="rounded-full" label="รับสิทธิ์พิเศษเพิ่มเติม - เข้าโปรแกรม {{ $request['offer_month']??3 }} เดือน"
                     id="extra_2" wire:model.live="request.offer_3" /></span>
                 @endif
             @endif
