@@ -96,10 +96,12 @@
                     </span>
                 </div>
             </div>
-            <div class="text-right rounded-2xl text-black/70 p-4 shadow-lg ">
-                <x-inputs.number wire:model="stock_adj" label="จำนวนสินค้าที่เติม : " />
-                <x-button primary class="my-4" label="บันทึก" wire:click="add_stock_adj" />
-            </div>
+            @can('isAdmin')
+                <div class="text-right rounded-2xl text-black/70 p-4 shadow-lg ">
+                    <x-inputs.number wire:model="stock_adj" label="จำนวนสินค้าที่เติม : " />
+                    <x-button primary class="my-4" label="บันทึก" wire:click="add_stock_adj" />
+                </div>
+            @endcan
         </div>
     </div>
     <div>
