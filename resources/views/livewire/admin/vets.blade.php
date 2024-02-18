@@ -102,15 +102,15 @@
                         </td>
                         <td class="align-top md:border border-primary-blue md:text-right p-2 ml-2 table w-full md:w-auto md:table-cell">
                             <span class="md:hidden inline-block min-w-max mr-2">สิทธิ์ที่รับแล้ว</span>
-                            {{$vet->withCurrentStock()->sum('opt_1_act')}}
+                            {{$vet->stock->current()['redeemed']}}
                         </td>
                         <td class="align-top md:border border-primary-blue md:text-right p-2 ml-2 table w-full md:w-auto md:table-cell">
                             <span class="md:hidden inline-block min-w-max mr-2">สิทธิ์คงเหลือ</span>
-                            {{($vet->stock->total_stock??0) - $vet->withCurrentStock()->sum('opt_1')}}
+                            {{$vet->stock->current()['remaining']}}
                         </td>
                         <td class="align-top md:border border-primary-blue md:text-right p-2 ml-2 table w-full md:w-auto md:table-cell">
                             <span class="md:hidden inline-block min-w-max mr-2">สิทธิ์ที่รอ</span>
-                            {{$vet->withCurrentStock()->sum('c_pending')}}
+                            {{$vet->stock->current()['pending']}}
                         </td>
                         <td class="align-top md:border border-primary-blue md:text-right p-2 ml-2 table w-full md:w-auto md:table-cell">
                             <span class="md:hidden inline-block min-w-max mr-2">ครั้งที่เติมสิทธิ์</span>
@@ -118,11 +118,7 @@
                         </td>
                         <td class="align-top md:border border-primary-blue md:text-right p-2 ml-2 table w-full md:w-auto md:table-cell">
                             <span class="md:hidden inline-block min-w-max mr-2">สิทธิ์ที่ขาด</span>
-                            @if($vet->stocks - $vet->total_client_opt1 - ($vet->vet_total - $vet->total_client_activated) < 0) 
-                                {{$vet->stocks - $vet->total_client_opt1 - ($vet->vet_total - $vet->total_client_activated) }} 
-                            @else 
-                                0 
-                            @endif 
+                            {{$vet->stock->current()['outQuota']}}
                         </td>
 
                     </tr>

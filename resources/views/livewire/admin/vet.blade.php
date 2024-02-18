@@ -17,21 +17,19 @@
                 <div class=" rounded-2xl bg-primary-blue text-primary-lite/70 p-4 shadow-lg ">
                     Total :
                     <span class="text-2xl font-bold block">
-                        {{$stock->sum('client_all')}}
+                        {{$vet->stock->current()['client_all']}}
                     </span>
                 </div>
                 <div class=" rounded-2xl text-black/70 p-4 shadow-lg ">
                     Complete :
                     <span class="text-2xl font-bold block">
-                        {{$stock->sum('c_activated')}}
-                        {{-- {{$vet->client->where('active_status','activated')->count()}} --}}
+                        {{$vet->stock->current()['redeemed']}}
                     </span>
                 </div>
                 <div class=" rounded-2xl text-black/70 p-4 shadow-lg ">
                     Waiting :
                     <span class="text-2xl font-bold block">
-                        {{$stock->sum('client_all') - $stock->sum('c_activated') }}
-                        {{-- {{$vet->client->count()-$vet->client->where('active_status','activated')->count()}} --}}
+                        {{$vet->stock->current()['pending']}}
                     </span>
                 </div>
             </div>
@@ -40,24 +38,21 @@
                     <x-badge label="(Get free consultation and a tablet)"/></span>
                 <span class="font-bold text-xl text-black/70">
 
-                    {{$stock->sum('opt_1')}}
-                    {{-- {{$vet->client->where('option_1')->count()}} --}}
+                    {{$vet->stock->clients->where('option_1')->count()}}
                 </span>
             </p>
             <p class="mt-2 flex gap-2">
                 <span>รับสิทธิ์พิเศษเพิ่มเติม - เข้าโปรแกรม 1 เดือน <br>
                     <x-badge label="(Extra tablet sold)"/></span>
                 <span class="font-bold text-xl text-black/70">
-                    {{$stock->sum('opt_2')}}
-                    {{-- {{$vet->client->where('option_2')->count()}} --}}
+                    {{$vet->stock->clients->where('option_2')->count()}}
                 </span>
             </p>
             <p class="mt-2 flex gap-2">
                 <span>รับสิทธิ์พิเศษเพิ่มเติม - เข้าโปรแกรม 3 เดือน <br>
                     <x-badge label="(Extra box sold)"/></span>
                 <span class="font-bold text-xl text-black/70">
-                    {{$stock->sum('opt_3')}}
-                    {{-- {{$vet->client->where('option_3')->count()}} --}}
+                    {{$vet->stock->clients->where('option_3')->count()}}
                 </span>
             </p>
         </div>
@@ -84,15 +79,14 @@
                     <x-badge label="Remaining Quota" />
                     <span class="text-2xl font-bold block">
                         
-                        {{$vet->stock->total_stock - $vet->stockRedeemed()}}
+                        {{$vet->stock->current()['remaining']}}
                     </span>
                 </div>
                 <div class=" rounded-2xl bg-red-300 text-black/70 p-2 shadow-lg ">
                     สินค้าขาด
                     <x-badge label="Out of quota" />
                     <span class="text-2xl font-bold block">
-                        
-                        {{($vet->stock->total_stock - $vet->stockRedeemed())<0?($vet->stock->total_stock - $vet->stockRedeemed()):'-'}}
+                        {{$vet->stock->current()['outQuota']}}
                     </span>
                 </div>
             </div>
@@ -107,7 +101,7 @@
     <div>
         <!-- updated_at | desc -->
         <div class="mt-7 overflow-x-auto">
-            @if ($vetClients)
+        @if ($vetClients->count())
             <table class="min-w-full table-fixed whitespace-nowrap">
                 <thead>
                     <tr class="border border-primary-blue bg-primary-blue  text-xs">
@@ -219,7 +213,7 @@
             {{$vetClients->links()}}
         </div>
         @else
-        <div>No client regis yet</div>
+        <div class="text-center p-4">No client regis yet</div>
         @endif
     </div>
 </div>

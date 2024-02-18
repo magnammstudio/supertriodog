@@ -9,7 +9,7 @@ use Hamcrest\Type\IsBoolean;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Livewire\Component;
-
+use Illuminate\Support\Str;
 use Livewire\WithPagination;
 
 class Vet extends Component
@@ -29,12 +29,12 @@ class Vet extends Component
             abort(404);
         }
         if(Auth::user()->isVet()){
-            $isOwner = $this->vet->id == Auth::user()->id;
-            if(!$isOwner){
+            if(!Str::startsWith(Auth::user()->id, $this->vet->stock_id)){
                 abort(403);
             }
         }
-        $this->stock = $this->vet->withCurrentStock();
+        
+        $this->stock = $this->vet->stock;
     }
     public function render()
     {

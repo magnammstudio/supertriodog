@@ -164,35 +164,20 @@
                             {{$client->active_status}}
                         </td>
                         <td class="align-top text-center md:border border-primary-blue p-2 ml-2 table md:table-cell">
-                            <!-- สิทธิ์ทั้งหมด -->
-                            <!-- total stock a -->
                             <span class="md:hidden inline-block min-w-max mr-2">สิทธิ์ทั้งหมด</span>
                             {{$vets->find($client->vet_id)->stock->total_stock }}
-                            
                         </td>
                         <td class="align-top text-center md:border border-primary-blue p-2 ml-2 table md:table-cell">
-                            <!-- สิทธิ์ลงเหลือ -->
-                            <!-- total stock - total activate -->
                             <span class="md:hidden inline-block min-w-max mr-2">สิทธิ์คงเหลือ</span>
-                            {{$vets->find($client->vet_id)->stock->total_stock - $vets->find($client->vet_id)->withCurrentStock()->sum('opt_1_act') }}
-                            
-                            {{-- {{$client->vet->stockRemaining()>0?$client->vet->stockRemaining():'-'}} --}}
+                            {{$vets->find($client->vet_id)->stock->current()['remaining']}}
                         </td>
                         <td class="align-top text-center md:border border-primary-blue p-2 ml-2 table md:table-cell">
-                            <!-- สิทธิ์ที่รับแล้ว	 -->
-                            <!-- total activate -->
                             <span class="md:hidden inline-block min-w-max mr-2">สิทธิ์ที่รับแล้ว</span>
-                            {{$vets->find($client->vet_id)->withCurrentStock()->sum('opt_1_act') }}
-                            {{-- {{$client->vet->stockRedeemed()}} --}}
+                            {{$vets->find($client->vet_id)->stock->current()['redeemed']}}
                         </td>
                         <td class="align-top text-center md:border border-primary-blue p-2 ml-2 table md:table-cell">
                             <span class="md:hidden inline-block min-w-max mr-2">สินค้าขาด</span>
-                            @if ($vets->find($client->vet_id)->stock->total_stock - $vets->find($client->vet_id)->withCurrentStock()->sum('opt_1') < 0)
-                                {{$vets->find($client->vet_id)->stock->total_stock - $vets->find($client->vet_id)->withCurrentStock()->sum('opt_1') }}
-                            @else
-                                -
-                            @endif
-                            {{-- {{$client->vet->stockRemaining()<0?$client->vet->stockRemaining():'-'}} --}}
+                            {{$vets->find($client->vet_id)->stock->current()['outQuota']}}
                         </td>
                     </tr>
                 @endforeach

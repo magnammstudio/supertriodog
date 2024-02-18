@@ -8,7 +8,7 @@
             <x-errors/>
             @auth
                 @if (Auth::user()->isVet())
-                    <x-button label="กลับสู่หน้าสถานพยาบาล" :href="route('admin.vet')"/>    
+                    <x-button label="กลับสู่หน้า {{Auth::user()->vet->vet_name}}" :href="route('admin.vet')"/>    
                 @else
                     <x-button label="กลับสู่หน้าหลักผู้ดูแล" :href="route('admin.home')"/>    
                 @endif

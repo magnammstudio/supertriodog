@@ -19,7 +19,6 @@
     <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
         <div class="px-4 py-8 bg-white shadow sm:rounded-lg sm:px-10">
             <form wire:submit.prevent="authenticate" class="grid gap-2">
-                
                 <x-input wire:model.lazy="username" label="รหัสร้านค้า"/>
                 <x-inputs.password wire:model.lazy="password" label="รหัสผ่าน"/>
                 <span class="my-1"> </span>

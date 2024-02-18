@@ -48,15 +48,16 @@ class User extends Authenticatable
 
 
     public function vet(){
-        return $this->hasMany(vet::class,'user_id','id');
+        return $this->hasOne(vet::class,'user_id','id');
+        // return $this->hasMany(vet::class,'user_id','id');
     }
 
     public function isVet(){
-        $isVet = $this->vet()->count()>0;
-        return $isVet;
+        // $isVet = $this->vet->count()>0;
+        return $this->vet;
     }
     public function haveNoVet(){
-        $isVet = $this->vet()->count()==0;
+        $isVet = $this->vet->count()==0;
         return $isVet;
     }
 }

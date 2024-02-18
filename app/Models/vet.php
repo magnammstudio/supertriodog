@@ -59,12 +59,12 @@ class vet extends Model
                 $query->whereNot('active_status','activated');
             }
         ])->where('stock_id',$this->stock_id)->get();
-        
         return $vet;
     }
     public function stockRedeemed(){
         $opt1= $this->client->where('option_1')->where('active_status','activated')->count();
-        
-        return $opt1;
+        $opt3= $this->client->where('active_status','activated')->sum('option_3')/3;
+
+        return $opt1+$opt3;
     }
 }
