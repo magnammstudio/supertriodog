@@ -3,9 +3,9 @@
 @section('content')
 <div class="container m-auto text-center grid items-center h-screen">
     <div>
+        <x-logo class="h-20 m-auto"/>
             <h1 class="text-9xl font-bold py-6">404</h1>
             <h2 class="text-xl font-bold py-6">PAGE NOT FOUND</h2>
-            <x-errors/>
             @auth
                 @if (Auth::user()->isVet())
                     <x-button label="กลับสู่หน้า {{Auth::user()->vet->vet_name}}" :href="route('admin.vet')"/>    

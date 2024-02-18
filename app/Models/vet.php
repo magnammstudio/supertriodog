@@ -24,47 +24,12 @@ class vet extends Model
         'vet_remark'=>'array'
     ];
     public function user(){
-        return $this->hasOne(User::class);
+        return $this->belongsTo(User::class);
     }
     public function client(){
         return $this->hasMany(client::class);
     }
-    public function stock()
-    {
+    public function stock(){
         return $this->belongsTo(stock::class);
-    }
-
-    public function stockRemaining(){
-        return $this->stock->total_stock- $this->withCurrentStock()->sum('opt_1_act');
-    }
-    public function withCurrentStock(){
-        $vet = $this->withCount([
-            'client as client_all',
-            'client as opt_1_act' =>function( $query){
-                $query->where('option_1', 1)->where('active_status','activated');
-            },
-            'client as opt_1' =>function( $query){
-                $query->where('option_1', 1);
-            },
-            'client as opt_2' =>function( $query){
-                $query->where('option_2', 1);
-            },
-            'client as opt_3' =>function( $query){
-                $query->where('option_3','>=', 1);
-            },
-            'client as c_activated' =>function( $query){
-                $query->where('active_status','activated');
-            },
-            'client as c_pending' =>function( $query){
-                $query->whereNot('active_status','activated');
-            }
-        ])->where('stock_id',$this->stock_id)->get();
-        return $vet;
-    }
-    public function stockRedeemed(){
-        $opt1= $this->client->where('option_1')->where('active_status','activated')->count();
-        $opt3= $this->client->where('active_status','activated')->sum('option_3')/3;
-
-        return $opt1+$opt3;
     }
 }

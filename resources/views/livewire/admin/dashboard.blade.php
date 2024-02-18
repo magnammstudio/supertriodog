@@ -1,43 +1,43 @@
 <div class="container m-auto">
     <div class="flex gap-4 flex-wrap py-2">
         <div class="p-4 px-6 rounded-xl shadow-md bg-primary-blue text-white">
-            <span> Total : </span><span class="text-2xl font-bold"> {{$static['client']}} </span>
+            <span> Total : </span><span class="text-xl md:text-2xl font-bold"> {{$static['client']}} </span>
         </div>
         <div class="p-4 px-6 rounded-xl shadow-md bg-white text-primary-blue">
-            <span> Complete : </span><span class="text-2xl font-bold"> {{$static['client_activated']}} </span>
+            <span> Complete : </span><span class="text-xl md:text-2xl font-bold"> {{$static['client_activated']}} </span>
         </div>
         <div class="p-4 px-6 rounded-xl shadow-md bg-white text-primary-blue">
-            <span> Waiting : </span><span class="text-2xl font-bold"> {{$static['client_pending']}} </span>
+            <span> Waiting : </span><span class="text-xl md:text-2xl font-bold"> {{$static['client_pending']}} </span>
         </div>
     </div>
 
-    <div class="text-primary-blue flex justify-between flex-wrap py-2 mt-4">
+    <div class="text-primary-blue grid md:grid-cols-3 gap-2 py-2 mt-4">
         <div class="flex gap-2">
             <span>
                 <p>
-                    รับคำปรึกษาและเข้าร่วมโปรแกรม Super TRIO
+                    รับคำปรึกษาและเข้าร่วมโปรแกรม<br> {{env('APP_NAME')}}
                 </p>
                 <x-badge label="(Get free consultation and a tablet)" />
             </span>
-            <span class="text-xl font-bold">{{$static['client_option_1']}}</span>
+            <span class="text-2xl font-bold float-right">{{$static['client_option_1']}}</span>
         </div>
         <div class="flex gap-2">
             <span>
                 <p>
-                    รับสิทธิ์พิเศษเพิ่มเติม - เข้าโปรแกรม 1 เดือน
+                    รับสิทธิ์พิเศษเพิ่มเติม <br>- เข้าโปรแกรม 1 เดือน
                 </p>
                 <x-badge label="(Extra tablet sold)" />
             </span>
-            <span class="text-xl font-bold">{{$static['client_option_2']}}</span>
+            <span class="text-2xl font-bold float-right">{{$static['client_option_2']}}</span>
         </div>
         <div class="flex gap-2">
             <span>
                 <p>
-                    รับสิทธิ์พิเศษเพิ่มเติม - เข้าโปรแกรม 3 เดือน
+                    รับสิทธิ์พิเศษเพิ่มเติม <br>- เข้าโปรแกรม 3 เดือน
                 </p>
                 <x-badge label="(Extra box sold)" />
             </span>
-            <span class="text-xl font-bold">{{$static['client_option_3']}}</span>
+            <span class="text-2xl font-bold float-right">{{$static['client_option_3']}}</span>
         </div>
     </div>
 

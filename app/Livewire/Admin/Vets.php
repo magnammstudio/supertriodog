@@ -5,7 +5,6 @@ namespace App\Livewire\Admin;
 use App\Models\stock;
 use App\Models\vet;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Gate;
 use Livewire\Component;
 
 use Livewire\WithPagination;
@@ -22,12 +21,10 @@ class Vets extends Component
         'search.text'=> ['except' => '','as'=>'q'],
         'search.paginate'=> ['except' => 50,'as'=>'p']
     ];
-    // public $stock;
-    // public $vets;
+    
     public function mount(){
-        
         if(!Auth::user()->isAdmin){
-            return redirect()->route('admin.vet' ,['id'=>Auth::user()->id]);
+            return redirect()->route('admin.vet' ,Auth::user()->id);
         }
     }
     public function render(){

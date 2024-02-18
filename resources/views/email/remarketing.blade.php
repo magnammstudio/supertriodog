@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="container m-auto mt-4 mb-10">
-        <x-application-logo class="h-20 m-auto"/>
+        <x-logo class="h-20 m-auto"/>
         <div class="p-4 rounded-xl shadow-lg text-center">
             <h1 class="bg-primary-blue text-white text-2xl font-bold p-4 text-center">
                 Remarketing Test

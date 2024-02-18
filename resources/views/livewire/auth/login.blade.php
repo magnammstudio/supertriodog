@@ -24,7 +24,7 @@
                 <span class="my-1"> </span>
                 <x-checkbox label="จดจำรหัสผ่านของฉันเอาไว้" wire:model.defer="remember"/>
                 <span class="my-4"> </span>
-                <x-button xl primary type="submit" right-icon="chevron-right" label="Login"/>
+                <x-button xl primary type="submit" right-icon="chevron-right" label="Login" wire:click="authenticate" />
             </form>
         </div>
     </div>

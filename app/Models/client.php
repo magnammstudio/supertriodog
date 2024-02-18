@@ -33,16 +33,14 @@ class client extends Model
         'remark'
     ];
 
-    // protected $casts = [
-    //     'remark' => 'JSON',
-    // ];
-    public function vet()
-    {
+    protected $casts = [
+        'remark' => 'array',
+        'vet_id' => 'string',
+    ];
+    public function vet(){
         return $this->belongsTo(vet::class);
     }
-    // public function info(){
-    //     return $this->hasMany(ClientInfo::class);
-    // }
+
     public function rmkt(){
         return $this->hasMany(rmktClient::class);
     }

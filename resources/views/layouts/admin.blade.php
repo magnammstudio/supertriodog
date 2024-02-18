@@ -1,20 +1,20 @@
 @extends('layouts.base')
 
 @section('body')
+
+    <x-notifications />
     <div class="flex flex-col justify-center min-h-screen py-2 bg-gray-50 sm:px-4">
         <div class="container m-auto">
             <nav class="flex justify-start items-center flex-wrap gap-2 p-2 ">
-                <x-application-logo class="block h-10 w-auto fill-current text-gray-800" />
+                <x-logo class="block h-10 w-auto fill-current text-gray-800" />
                 @can('isAdmin')
                 <x-button label="dashboard" icon="template" 
                     :flat="!Str::contains(Route::current()->getName(),'admin.home')" 
                     :primary="Str::contains(Route::current()->getName(),'admin.home')" 
-                    
                     href="{{route('admin.home')}}" />
                 <x-button flat label="Vet" icon="shopping-cart" 
                     :flat="!Str::contains(Route::current()->getName(),'admin.vets')" 
                     :primary="Str::contains(Route::current()->getName(),'admin.vets')" 
-                    
                     href="{{route('admin.vets')}}" />
                 @endcan
             

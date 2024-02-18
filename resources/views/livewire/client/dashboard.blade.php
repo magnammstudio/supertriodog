@@ -93,14 +93,6 @@
             (สอบถามที่พนักงานของคลินิก)
         </p>
         
-        @if ($status == -1)
-            <div class="my-2">
-                <x-badge negative label="รหัสคลินิก หรือ โรงพยาบาลสัตว์ ไม่ถูกต้อง" />
-            </div>
-        @endif
-        <div>
-            <x-errors title=" "/>
-        </div>
         <x-input wire:model.live.debounce.500ms="request.vet_id" label="รหัสคลินิก หรือ โรงพยาบาลสัตว์" placeholder="รหัสคลินิก หรือ โรงพยาบาลสัตว์"/>
         <div class="mt-2">
 
@@ -110,14 +102,14 @@
             </div>
         @endif
             
-            @if($client->vet->stockRemaining()<=0)
+            @if($client->vet->stock->current()['remaining']<=0)
             <span class="p-2 block pointer-events-none opacity-50">
                 <x-checkbox lg class="rounded-full" 
                     label="รับคำปรึกษาและเข้าร่วมโปรแกรม {{env('APP_NAME')}}" description="ไม่สามารถเลือกได้" />
             </span>
             @else
                 @if (env('VET_OPTION_1',true))
-                    <span class="p-2 block"><x-checkbox lg class="rounded-full" label="รับคำปรึกษาและเข้าร่วมโปรแกรม Super TRIO"
+                    <span class="p-2 block"><x-checkbox lg class="rounded-full" label="รับคำปรึกษาและเข้าร่วมโปรแกรม {{env('APP_NAME')}}"
                         id="standard"    wire:model.lazy="request.offer_1" /></span>
                 @endif
                 @if (env('VET_OPTION_2',true))
@@ -155,7 +147,7 @@
         </div>
         <div class="py-2 text-center flex justify-center mt-auto" wire:loading.remove>
             <x-button lg right-icon="chevron-right" primary  class="bg-gradient-to-br from-gradient-start to-gradient-end rounded-2xl
-                {{$client->vet->stockRemaining()<=0?'pointer-events-none opacity-50 select-none':''}}"
+                {{$client->vet->stock->current()['remaining']<=0?'pointer-events-none opacity-50 select-none':''}}"
                 wire:click="verifyVet" type="button" label="รับสิทธิ์" 
                 />
         </div>

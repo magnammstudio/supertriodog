@@ -89,7 +89,7 @@
                             <x-button flat :label="$vet->vet_remark['id']??$vet->id" :href="route('admin.vet',[$vet->id])" />
                         </td>
                         <td class="align-top md:border border-primary-blue p-2 ml-2 table w-full md:w-auto md:table-cell">
-                            <x-button flat :label="$vet->vet_name" :href="route('admin.vet',[$vet->id])" />
+                            <x-button flat :label="$vet->vet_name" :href="route('admin.vet',$vet->id)" />
                             <span class="whitespace-nowrap flex">
                                 <x-badge outline label="{{$vet->vet_province}}" />
                                 <x-badge outline label="{{$vet->vet_city}}" />

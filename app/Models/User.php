@@ -7,11 +7,13 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use PhpParser\Node\Expr\Cast\Bool_;
 
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
+    protected $primaryKey = 'id';
     /**
      * The attributes that are mass assignable.
      *
@@ -49,15 +51,10 @@ class User extends Authenticatable
 
     public function vet(){
         return $this->hasOne(vet::class,'user_id','id');
-        // return $this->hasMany(vet::class,'user_id','id');
     }
 
     public function isVet(){
-        // $isVet = $this->vet->count()>0;
-        return $this->vet;
-    }
-    public function haveNoVet(){
-        $isVet = $this->vet->count()==0;
-        return $isVet;
+        $isvet=$this->vet!=null;
+        return $isvet; //Auth::user()->vet;
     }
 }

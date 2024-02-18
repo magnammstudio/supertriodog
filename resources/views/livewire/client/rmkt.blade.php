@@ -105,7 +105,7 @@
                     <div class="mt-8 pb-2">
                         <h3 class="text-xl pb-2 font-bold"> ถึงเวลา {{ $client_data->pet_name ?? '' }} </h3>
 
-                        เข้าโปรแกรม Super TRIO<br>
+                        เข้าโปรแกรม {{env('APP_NAME')}}<br>
                         โปรแกรมปกป้องสุนัขจากปรสิตร้ายที่อันตรายถึงชีวิต<br>
                         เป็นประจำทุกเดือนแล้ว<br>
 
@@ -350,7 +350,7 @@
                     <p class="text-center mb-8">
                         น้อง {{ $client->pet_name ?? '' }}<br>
                         ขนาด {{ $client->pet_weight ?? '' }}<br>
-                        ไปรับคำปรึกษา และเข้าร่วมโปรแกรม Super TRIO<br>
+                        ไปรับคำปรึกษา และเข้าร่วมโปรแกรม {{env('APP_NAME')}}<br>
                         ที่ {{ $rmktClient->vet->vet_name ?? '?' }}<br>
                     </p>
                     <p class="text-center">

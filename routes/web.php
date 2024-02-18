@@ -21,10 +21,13 @@ use App\Mail\mailConfirmation;
 use App\Mail\mailRemarketing;
 use App\Models\client;
 use App\Models\rmktClient;
-use Carbon\Carbon;
-use Illuminate\Support\Facades\Hash;
+use App\Models\User;
+use App\Models\vet;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Hash;
 
 /*
 |--------------------------------------------------------------------------
@@ -39,12 +42,8 @@ use Illuminate\Support\Facades\Route;
 
 // Route::view('/', 'welcome')->name('home');
 Route::get('/dev', function(){
-    
-    // dd(Hash::make('catPlus'));
-    // $c = \App\Models\client::with('vet')->where('phone','0809166690')->first();
-    // $v = \App\Models\vet::with('stock')->find($c->vet)->first();
-    // $s = $v->stockLeft();
-    // dd($c,$v->stock->total_stock,$s);
+    dd(Auth::user()->isVet());
+    dd('test only');
 });
 Route::get('/', ClientRegister::class)->name('home');
 
@@ -60,6 +59,7 @@ Route::name('client.')->prefix('client')->group(function (){
         Route::get('/rmkt/{phone?}', ClientRmkt::class)->name('rmkt');
         
         Route::get('/download/', [downloads::class,'client'])->name('download');
+        
     // }
 
 });
@@ -69,7 +69,7 @@ Route::name('client.')->prefix('client')->group(function (){
 Route::name('test.')->prefix('test')->group(function (){
     
     Route::view('email/','email.index');
-    Route::view('email/confirmation','email.confirmation',['client'=>client::find(1)])->name('email.confirmation');
+    Route::view('email/confirmation/{phone?}','email.confirmation',['client'=>client::find(1)])->name('email.confirmation');
     Route::view('email/rmkt/{phone?}','email.remarketing',['client'=>client::find(1)])->name('email.remarketing');
     // Route::get(function () {
     Route::fallback(function () {
@@ -97,6 +97,7 @@ Route::middleware('auth')->name('admin.')->prefix('admin')->group(function (){
     // Route::get('/vet/{id?}', AdminDashboard::class)->name('home');
     
     Route::get('/logout', LogoutController::class)->name('logout');
+
 });
 
 

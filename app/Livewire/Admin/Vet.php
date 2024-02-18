@@ -3,22 +3,20 @@
 namespace App\Livewire\Admin;
 
 use App\Models\client as ClientModels;
-use App\Models\stock;
 use App\Models\vet as VetModels;
-use Hamcrest\Type\IsBoolean;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Gate;
+use App\Models\stock;
 use Livewire\Component;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Livewire\WithPagination;
+use WireUi\Traits\Actions;
 
 class Vet extends Component
 {
     use WithPagination;
-
+    use Actions;
     public $vet,$stock;
     public $stock_adj;
-    // public $vetClients;
 
     public function mount($id=null){
         if(!$id){
@@ -28,7 +26,7 @@ class Vet extends Component
         if(!$this->vet){
             abort(404);
         }
-        if(Auth::user()->isVet()){
+        if(!Auth::user()->isAdmin){
             if(!Str::startsWith(Auth::user()->id, $this->vet->stock_id)){
                 abort(403);
             }
@@ -52,9 +50,13 @@ class Vet extends Component
         $vetStock->total_stock+=$this->stock_adj;
         $vetStock->stock_adj+=1;
         $vetStock->save();
-
-        $this->stock = $this->vet->withCurrentStock();
         
+        $this->notification()->success(
+            $title = 'เติมสิทธิ์สมบูรณ์',
+            $description = 'เพิ่มสิทธิ์จำนวน '.$this->stock_adj.' จำนวนสิทธิ์ทั้งหมด '.$vetStock->total_stock
+        );
+        $this->stock_adj=null;
+        $this->stock = $vetStock;
     }
     public function delete (ClientModels $client){
         $client->delete();

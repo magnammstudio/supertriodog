@@ -34,7 +34,7 @@
                 </div>
             </div>
             <p class="mt-4 flex gap-2"> 
-                <span>รับคำปรึกษาและเข้าร่วมโปรแกรม Super TRIO <br>
+                <span>รับคำปรึกษาและเข้าร่วมโปรแกรม {{env('APP_NAME')}} <br>
                     <x-badge label="(Get free consultation and a tablet)"/></span>
                 <span class="font-bold text-xl text-black/70">
 
@@ -59,7 +59,7 @@
         <div>
             <div class="flex gap-2 justify-end">
                 <div class=" rounded-2xl text-black/70 p-2 shadow-lg ">
-                    สินค้าทั้งหมด
+                    สิทธิ์ทั้งหมด
                     <x-badge label="All Quota" />
                     <span class="text-2xl font-bold block">
                         
@@ -75,7 +75,7 @@
                     </span>
                 </div>
                 <div class=" rounded-2xl text-black/70 p-2 shadow-lg ">
-                    สินค้าคงเหลือ
+                    สิทธิ์คงเหลือ
                     <x-badge label="Remaining Quota" />
                     <span class="text-2xl font-bold block">
                         
@@ -83,7 +83,7 @@
                     </span>
                 </div>
                 <div class=" rounded-2xl bg-red-300 text-black/70 p-2 shadow-lg ">
-                    สินค้าขาด
+                    สิทธิ์ขาด
                     <x-badge label="Out of quota" />
                     <span class="text-2xl font-bold block">
                         {{$vet->stock->current()['outQuota']}}
@@ -167,7 +167,7 @@
                         <td class="align-top md:border mx-2 whitespace-nowrap border-primary-blue p-2 hidden w-full md:w-auto md:table-cell md:text-center ">
                             @if($client->option_1)
                             <x-badge.circle positive icon="check" class="w-5 h-5 m-auto p-2 inline-block" />
-                            <span class="md:hidden inline-block min-w-max mx-2 my-1">เข้าร่วม โปรแกรม Super TRIO</span>
+                            <span class="md:hidden inline-block min-w-max mx-2 my-1">เข้าร่วม โปรแกรม {{env('APP_NAME')}}</span>
                             @endif
                         </td>
                         <td class="align-top md:border mx-2 whitespace-nowrap border-primary-blue p-2 hidden w-full md:w-auto md:table-cell md:text-center ">
@@ -190,7 +190,7 @@
                         <td class="align-top md:border mx-2 whitespace-nowrap border-primary-blue p-2 md:text-center table w-full md:w-auto md:table-cell">
                             <ul class="md:hidden">
                                 @if($client->option_1)
-                                <li><x-badge.circle positive icon="check" class="w-5 h-5 m-auto p-2 inline-block" /> <span class="md:hidden inline-block min-w-max mx-2 my-1">เข้าร่วม โปรแกรม Super TRIO</span></li>
+                                <li><x-badge.circle positive icon="check" class="w-5 h-5 m-auto p-2 inline-block" /> <span class="md:hidden inline-block min-w-max mx-2 my-1">เข้าร่วม โปรแกรม {{env('APP_NAME')}}</span></li>
                                 @endif
                                 @if($client->option_2)
                                 <li><x-badge.circle positive icon="check" class="w-5 h-5 m-auto p-2 inline-block" /> <span class="md:hidden inline-block min-w-max mx-2 my-1">เข้าร่วมโปรแกรม 1 เดือน</span></li>

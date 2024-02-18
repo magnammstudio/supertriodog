@@ -53,19 +53,15 @@ class Dashboard extends Component
     }
     public function render()
     {   
-        if($this->client->vet->stockRemaining()<=0){
-            // dd($this->client->vet->stockRemaining());
-            $this->addError('stock', 'This Vet is out of stock');
+        if($this->client->vet->stock->current()['remaining']<=0){
+            $this->addError('request.vet_id', 'สิทธิ์คลินิกหรือ โรงพยาบาลสัตว์ ไม่เพียงพอ');
         }
-        return view('livewire.client.dashboard',[
-            // 'stockRemain'=>10
-        ]);
+        return view('livewire.client.dashboard');
     }
 
     public function updated($propertyName)
     {
         $this->resetErrorBag();
-        // dd($propertyName,$this->getErrorBag());
     }
     public function verifyVet(){
         // validate
@@ -93,7 +89,7 @@ class Dashboard extends Component
             $this->client->active_status = 'activated';
             $this->client->active_date = now();
             $this->client->save();
-            // dd($this->client);
+
             $this->step(6);
         }else{
             $this->status=-1;
