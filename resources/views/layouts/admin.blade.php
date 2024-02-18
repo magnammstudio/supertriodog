@@ -18,22 +18,25 @@
                     href="{{route('admin.vets')}}" />
                 @endcan
             
-                {{-- <x-select class="py-4 ml-auto w-full sm:w-auto" 
-                placeholder="ค้นหาชื่อคลินิก" :options="$vet_list" option-label="name" option-value="id" wire:model="VetSelect" /> --}}
                 <div class="ml-auto flex gap-2 items-center">
                     @can('isAdmin')
                     <x-button sm :href="route('client.download')" icon="download" class="rounded-full aspect-square sm:rounded sm:aspect-auto">
                         <span class="hidden sm:inline">download client data</span>
                     </x-button>
                     @endcan
-                <x-dropdown>
-                    <x-dropdown.item :label="Auth::user()->name"/>
-                    <x-slot name="trigger">
-                        <x-button.circle icon="user" label="Options" primary />
-                    </x-slot>
-                    
-                    <x-dropdown.item separator label="Logout" icon="logout" :href="route('admin.logout')"/>
-                </x-dropdown>
+                        <x-dropdown width="w-max">
+                            <x-slot name="trigger">
+                                <x-button.circle icon="user" label="Options" primary />
+                            </x-slot>
+                            @if (Auth::user()->vet)
+                                @foreach ( Auth::user()->vet->stock->vet()->get() as $key => $vet )
+                                    <x-dropdown.item :separator="$key!=0" :label="$vet->vet_name" :href="route('admin.vet',$vet->id)"/>
+                                @endforeach
+                            @else
+                                <x-dropdown.item :label="Auth::user()->name" />
+                            @endif
+                            <x-dropdown.item separator label="Logout" icon="logout" :href="route('admin.logout')"/>
+                        </x-dropdown>
                 </div>
             </nav>
 
