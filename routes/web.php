@@ -17,6 +17,8 @@ use App\Livewire\Client\Rmkt as ClientRmkt;
 use App\Livewire\Admin\Dashboard as AdminDashboard;
 use App\Livewire\Admin\Vets as AdminVets;
 use App\Livewire\Admin\Vet as AdminVet;
+use App\Livewire\Management\Vet as ManagementVet;
+use App\Livewire\Management\VetEdit as ManagementVetEdit;
 use App\Mail\mailConfirmation;
 use App\Mail\mailRemarketing;
 use App\Models\client;
@@ -41,9 +43,13 @@ use Illuminate\Support\Facades\Hash;
 */
 
 // Route::view('/', 'welcome')->name('home');
-Route::get('/dev', function(){
-    dd(Auth::user()->isVet());
-    dd('test only');
+Route::middleware('auth')->name('ma.')->prefix('ma')->group(function (){
+    Route::get('/vet', ManagementVet::class);
+    Route::get('/vet/edit/{$vet?}', ManagementVetEdit::class);
+    Route::get('/dev', function(){
+        dd(Auth::user()->isVet());
+        dd('test only');
+    });
 });
 Route::get('/', ClientRegister::class)->name('home');
 
