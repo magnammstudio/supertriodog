@@ -29,8 +29,8 @@
         <div class="text-center mt-8  py-4">
             ฟรี! ลงทะเบียนรับคำปรึกษา<br>
             และรับสิทธิพิเศษเข้าร่วม<br>
-            โปรแกรม LOVE solution cat PLUS<br>
-            โปรแกรมปกป้องปรสิตสำหรับคนรักแมว <br>
+            โปรแกรม {{env('APP_NAME')}}<br>
+            {{env('APP_TAGLINE')}} <br>
         </div>
         <div class="grid gap-2 pb-8">
             <p>ข้อมูลเจ้าของแมว</p>
@@ -124,7 +124,7 @@
             <h3 class="text-center text-xl pb-2 font-bold text-primary-blue"> กรุณากรอกข้อมูลแมว </h3>
             <p class="text-center">
                 ที่ต้องการเข้าร่วมโปรแกรม<br>
-                LOVE solution cat PLUS
+                {{env('APP_NAME')}}
             </p>
         </div>
 
@@ -178,7 +178,7 @@
                 เลือกคลินิก หรือโรงพยาบาลสัตว์
             </h3>
             <p>ที่ต้องการรับคำปรึกษาและ<br>
-                เข้าร่วมโปรแกรม LOVE solution cat PLUS<br>
+                เข้าร่วมโปรแกรม {{env('APP_NAME')}}<br>
                 กรุณาเลือกที่อยู่ของ <u>คลินิกหรือโรงพยาบาลสัตว์ที่ท่านสะดวก</u>
             </p>
         </div>
@@ -247,8 +247,8 @@
         <h3 class="text-center text-xl my-8 p-4 font-bold text-white bg-primary-blue"> การลงทะเบียนเสร็จสมบูรณ์ </h3>
         <p class="text-center">
             ท่านได้รับสิทธิ์ รับคำปรึกษา<br>
-            และเข้าร่วมโปรแกรม LOVE solution cat PLUS<br>
-            โปรแกรมปกป้องปรสิตสำหรับคนรักแมว<br>
+            และเข้าร่วมโปรแกรม {{env('APP_NAME')}}<br>
+            {{env('APP_TAGLINE')}}<br>
 
         </p>
         </div>
@@ -257,7 +257,7 @@
             สามารถพา {{$pet_name}}<br>
             ขนาด {{$pet_weight}}<br>
             ไปรับคำปรึกษา <br>
-            และเข้าร่วมโปรแกรม LOVE solution cat PLUS<br>
+            และเข้าร่วมโปรแกรม {{env('APP_NAME')}}<br>
             ได้ที่โรงพยาบาล/คลินิก {{$vet_id?App\Models\Vet::find($vet_id)->vet_name:'-'}} ครับ<br>
         </p>
         <p class="text-center text-xs text-secondary-red">

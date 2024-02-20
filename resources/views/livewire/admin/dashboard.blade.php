@@ -97,7 +97,7 @@
                     </th>
                     <th class="hidden md:table-cell">
                         <div class="grid">
-                            <x-button primary-blue flat class="pointer-events-none text-white hover:bg-white/20"  label="น้ำหนัก สุนัข"/>
+                            <x-button primary-blue flat class="pointer-events-none text-white hover:bg-white/20"  label="น้ำหนัก แมว"/>
                             <x-badge primary label="Pet's weight"/>
                         </div>
                     </th>
@@ -156,7 +156,7 @@
                             @endif
                         </td>
                         <td class="align-top md:border border-primary-blue p-2 ml-2 table md:table-cell">
-                            <span class="md:hidden inline-block min-w-max mr-2">น้ำหนัก สุนัข</span>
+                            <span class="md:hidden inline-block min-w-max mr-2">น้ำหนัก  แมว</span>
                             {{$client->pet_weight}}
                         </td>
                         <td class="align-top md:border border-primary-blue p-2 ml-2 table md:table-cell">

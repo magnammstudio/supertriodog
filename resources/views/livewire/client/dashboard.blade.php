@@ -29,7 +29,7 @@
         <p class="text-center">
             ท่านได้รับสิทธิ์ รับคำปรึกษา <br>
             และเข้าร่วมโปรแกรม {{env('APP_NAME')}}<br>
-            โปรแกรมปกป้องปรสิตสำหรับคนรักแมว 
+            {{env('APP_TAGLINE')}}
         </p>
         <img class="my-4" src="{{asset('/img/app-banner.png')}}"/>
         <p class="text-center">

@@ -9,7 +9,7 @@
                         <p class="mb-4 text-center">
                             เข้าสู่ระบบสิทธิพิเศษ<br>
                             เข้าโปรแกรม {{env('APP_NAME','-')}}<br>
-                            โปรแกรมปกป้องปรสิตสำหรับคนรักแมว
+                            {{env('APP_TAGLINE')}}
                         </p>
                         <img class="my-8 px-8" src="{{ asset('img/app-banner.png') }}" />
                     </div>
@@ -40,8 +40,8 @@
                     <div class="mt-8 pb-2">
                         <p class="mb-4">
                             กรุณากรอกหมายเลขโทรศัพท์ ที่ท่านเคยลง ทะเบียนรับสิทธิ์
-                            เข้าโปรแกรม {{env('APP_NAME','-')}}<br>
-                            โปรแกรมปกป้องปรสิตสำหรับคนรักแมว
+                            เข้าโปรแกรม {{env('APP_NAME')}}<br>
+                            {{env('APP_TAGLINE')}}
                         </p>
                         <x-errors/>
                         <x-input label="หมายเลขโทรศัพท์" maxlength="10" minlength="10" placeholder="หมายเลขโทรศัพท์"
@@ -106,7 +106,7 @@
                         <h3 class="text-xl pb-2 font-bold"> ถึงเวลา {{ $client_data->pet_name ?? '' }} </h3>
 
                         เข้าโปรแกรม {{env('APP_NAME')}}<br>
-                        โปรแกรมปกป้องสุนัขจากปรสิตร้ายที่อันตรายถึงชีวิต<br>
+                        {{env('APP_TAGLINE')}}<br>
                         เป็นประจำทุกเดือนแล้ว<br>
 
                     </div>
@@ -137,10 +137,10 @@
                         <h3 class="text-center text-xl pb-2 font-bold">กรุณาตรวจสอบข้อมูลเพื่อยืนยันรับสิทธิ์</h3>
 
                         <ul>
-                            <li>ชื่อสุนัข : {{ $client->pet_name ?? '' }}</li>
+                            <li>ชื่อแมว : {{ $client->pet_name ?? '' }}</li>
                             <li>น้ำหนัก : {{ $client->pet_weight ?? '' }}</li>
                             <li>อายุ : {{ $client->pet_age_year ?? '' }} ปี {{ $client->pet_age_month ?? '' }} เดือน</li>
-                            <li>คลินิกหรือโรงพยาบาลสัตว์. : {{ $client->vet->vet_name ?? '' }}</li>
+                            <li>คลินิกหรือโรงพยาบาลสัตว์ : {{ $client->vet->vet_name ?? '' }}</li>
                         </ul>
 
                     </div>
