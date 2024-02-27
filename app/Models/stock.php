@@ -28,9 +28,12 @@ class stock extends Model
         $activate_opt_1 = $client->where('active_status','activated')->where('option_1')->count();
         $activate_opt_3 = $client->where('active_status','activated')->where('option_3')->count();
 
+        $opt_1 = $client->where('active_status','activated')->where('option_1')->count();
+        $opt_3 = $client->where('active_status','activated')->where('option_3')->count();
+
         $remaining = $quota - $activate_opt_1 - $activate_opt_3;
         $pending = $client->where('active_status','<>','activated')->count();
-        $outQuota = $remaining<=0?$remaining:0;
+        $outQuota = (($quota - $opt_1 - $opt_3)<=0)?($opt_1 - $opt_3):0;
 
         return [
             'client_all'=>$client->count(),
