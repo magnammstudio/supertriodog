@@ -47,12 +47,6 @@ class downloads extends Controller
                 $row['option 1']  = $Client->option_1??0;
                 $row['option 2']  = $Client->option_2??0;
                 $row['option 3']  = $Client->option_3??0;
-                // $option = explode("-", $Client->phoneIsVerified);
-                // // dd(str_contains($option[1],'standard'),str_contains($option[1],'extra'));
-                // if( is_array($option) ){
-                //     $row['offerBasic'] = count($option)>1?str_contains($option[1],'standard'):"";
-                //     $row['offerExtra'] = count($option)>1?str_contains($option[1],'extra'):"";
-                // }
     
                 $row['petName']  = $Client->pet_name;
                 $row['petBreed']  = $Client->pet_breed;
@@ -64,7 +58,6 @@ class downloads extends Controller
     
             fclose($file);
         };
-        // dd($callback);
         return response()->stream($callback, 200, $headers);
     }
 }

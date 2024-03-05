@@ -25,7 +25,7 @@ class Vet extends Component
                     ->orWhere('vet_name','like','%'.$text.'%');
             })
             ->paginate(5)
-        ]);
+        ])->extends('layouts.admin');;
     }
 
     public function password(vetModels $vet, string $pwd='catPLUS'){

@@ -14,11 +14,11 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule): void
     {
         // $schedule->command('inspire')->hourly();
-        $schedule->command('send:email')->daily();
+        // $schedule->command('send:email')->daily();
         // torun test localy
         // php artisan schedule:work
         $schedule->command('app:send-remarketing-email')
-            ->timezone('Asia/Bangkok')->dailyAt('11:00')
+            ->timezone('Asia/Bangkok')->dailyAt('10:00')
             ->emailOutputTo('maggotgluon@gmail.com');
     }
 

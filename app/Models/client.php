@@ -44,4 +44,28 @@ class client extends Model
     public function rmkt(){
         return $this->hasMany(rmktClient::class);
     }
+
+    public function profile(){
+        // dd($this->rmkt->);
+        // $client = $this->withCount(
+        //     [
+        //         'rmkt',
+        //         'rmkt as rmkt_active'=>function($query){
+        //             $query->where('active_status','activated');
+        //         },
+        //         'rmkt as rmkt_opt1'=>function($query){
+        //             $query->whereNotNull('option_1');
+        //         },
+        //         'rmkt as rmkt_opt2'=>function($query){
+        //             $query->whereNotNull('option_2');
+        //         },
+        //         'rmkt as rmkt_opt3'=>function($query){
+        //             $query->whereNotNull('option_3');
+        //         }
+        //     ]
+        // )->get();
+
+        // dd($client);
+
+    }
 }

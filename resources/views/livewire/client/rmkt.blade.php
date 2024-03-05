@@ -1,4 +1,11 @@
 <div>
+    @if (env('APP_DEBUG'))
+        @if (env('RMKT_GAME',false))
+            <x-badge label="game mode"/>
+        @else
+            <x-badge label="no game mode"/>
+        @endif
+    @endif
     @isset($currentStep)
         @switch($currentStep)
             @case(-1)
@@ -141,6 +148,17 @@
                             <li>น้ำหนัก : {{ $client->pet_weight ?? '' }}</li>
                             <li>อายุ : {{ $client->pet_age_year ?? '' }} ปี {{ $client->pet_age_month ?? '' }} เดือน</li>
                             <li>คลินิกหรือโรงพยาบาลสัตว์ : {{ $client->vet->vet_name ?? '' }}</li>
+
+                            {{-- if lasttime = none 1=3 or 3=1
+                            if lasttime = pending month = lasttime --}}
+                            <hr>{{$debug}}<hr>
+                            @if (!env('RMKT_GAME'))
+                                {{var_dump($data)}}<hr>
+                                <li>{{$client->option_1?'':'รับสิทธิ์พิเศษเพิ่มเติม - '}} เข้าโปรแกรม {{ $client->option_1 ?? $client->option_2 ?? $client->option_3 }} เดือน</li>
+                            @endif
+                            {{-- @if (!env('RMKT_OPTION'))
+                            <li>{{$client->option_1?'':'รับสิทธิ์พิเศษเพิ่มเติม - '}} เข้าโปรแกรม {{ $client->option_1 ?? $client->option_2 ?? $client->option_3 }} เดือน</li>
+                            @endif --}}
                         </ul>
 
                     </div>
@@ -168,53 +186,53 @@
                     </div>
 
 
-        
-        @if ($vet_list['province']!=null)
-            <div class="mt-4" >
-                <x-select
-                    label="จังหวัด" placeholder="เลือกจังหวัด"
-                    wire:model.live="selected_vet.province"
-                    :options="$vet_list['province']"
-                    clearable=false/>
-            </div>
-        @endif
+                        
+                        @if ($vet_list['province']!=null)
+                            <div class="mt-4" >
+                                <x-select
+                                    label="จังหวัด" placeholder="เลือกจังหวัด"
+                                    wire:model.live="selected_vet.province"
+                                    :options="$vet_list['province']"
+                                    clearable=false/>
+                            </div>
+                        @endif
 
-        @if ($selected_vet['province']!=null)
-        <div class="mt-4">
-            <x-native-select 
-                label="อำเภอ" placeholder="เลือกอำเภอ" 
-                wire:model.live="selected_vet.district" 
-                :options="$vet_list['city']" /> 
-        </div>
-        @endif
+                        @if ($selected_vet['province']!=null)
+                        <div class="mt-4">
+                            <x-native-select 
+                                label="อำเภอ" placeholder="เลือกอำเภอ" 
+                                wire:model.live="selected_vet.district" 
+                                :options="$vet_list['city']" /> 
+                        </div>
+                        @endif
 
-        @if ($selected_vet['district']!=null)
-        <div class="mt-4">
-            <x-native-select 
-                label="ตำบล" placeholder="เลือกตำบล" 
-                wire:model.live="selected_vet.tambon" 
-                :options="$vet_list['area']" />
-        </div>
-        @endif
+                        @if ($selected_vet['district']!=null)
+                        <div class="mt-4">
+                            <x-native-select 
+                                label="ตำบล" placeholder="เลือกตำบล" 
+                                wire:model.live="selected_vet.tambon" 
+                                :options="$vet_list['area']" />
+                        </div>
+                        @endif
 
 
-        @if($selected_vet['id']==null)
-        <div class="mt-4 bg-[#E9EFF6] rounded-xl p-2 h-[25vh] overflow-y-scroll soft-scrollbar">
-            @foreach ( $vet_list['name'] as $id => $name )
-            <div class="mb-4">
-                <x-radio id="{{$id}}" label="{{$id}} {{$name}}" value="{{$id}}" 
-                wire:model.lazy="selected_vet.id" />
-            </div>
-            @endforeach
-        </div>
-        @else
-        <div class="mt-4">
-            {{$selected_vet['name']}}<br>
-            <p>
-            {{$selected_vet['address']}}<br>
-            </p>
-        </div>
-        @endif
+                        @if($selected_vet['id']==null)
+                        <div class="mt-4 bg-[#E9EFF6] rounded-xl p-2 h-[25vh] overflow-y-scroll soft-scrollbar">
+                            @foreach ( $vet_list['name'] as $id => $name )
+                            <div class="mb-4">
+                                <x-radio id="{{$id}}" label="{{$id}} {{$name}}" value="{{$id}}" 
+                                wire:model.lazy="selected_vet.id" />
+                            </div>
+                            @endforeach
+                        </div>
+                        @else
+                        <div class="mt-4">
+                            {{$selected_vet['name']}}<br>
+                            <p>
+                            {{$selected_vet['address']}}<br>
+                            </p>
+                        </div>
+                        @endif
 
         
                     <div class="flex justify-between py-2 text-center mt-auto" wire:loading.remove>
@@ -261,11 +279,11 @@
                     <div class="flex justify-between py-2 text-center mt-auto" wire:loading.remove>
                         <x-button lg {{-- right-icon="chevron-right"  --}} primary
                             class="bg-gradient-to-br  from-warning-600 to-negative-600 rounded-2xl" {{-- wire:click="varifyOTP" --}}
-                            wire:click="next(3)" type="button" label="ยกเลิก" />
+                            wire:click="step(3)" type="button" label="ยกเลิก" />
 
                         <x-button lg right-icon="chevron-right" primary
                             class="bg-gradient-to-br from-gradient-start to-gradient-end rounded-2xl" {{-- wire:click="varifyOTP" --}}
-                            wire:click="next(5)" type="button" label="ยืนยัน" />
+                            wire:click="step(6)" type="button" label="ยืนยัน" />
                     </div>
                     <div class="py-2 text-center flex justify-center mt-auto" wire:loading>
                         กำลังดำเนินการ...
@@ -283,48 +301,59 @@
                     <p class="text-center mb-8">
                         (สอบถามที่พนักงานของคลินิก)
                     </p>
-                    {{-- @if ($errorStatus == 1)
-                        <x-badge negative label="รหัสคลินิก หรือ โรงพยาบาลสัตว์ผิด กรุณาติดต่อเจ้าหน้าที่" />
-                        <x-badge negative label="{{$vet_id}}" />
-                        @endif
-                        @if ($errorStatus == 2)
-                        <x-badge negative label="คุณเคยลงทะเบียนสำเร็จแล้ว ระบบจำกัดการลงทะเบียน 1 ครั้ง" />
-                        @endif --}}
-                    <x-input wire:model="vet_code" label="รหัสคลินิก หรือ โรงพยาบาลสัตว์"
+                    <x-input wire:model="data.vet_id" label="รหัสคลินิก หรือ โรงพยาบาลสัตว์"
                         placeholder="รหัสคลินิก หรือ โรงพยาบาลสัตว์" />
 
-                    <span class="p-2 block"><x-checkbox lg class="rounded-full" label="รับสิทธิ์เข้าโปรแกรม 1 เดือน"
-                            id="extra_1" wire:model.lazy="offer_2" /></span>
-                    {{-- <span class="p-2 block"><x-checkbox lg class="rounded-full" value=3
-                                label="รับสิทธิ์เข้าโปรแกรม {{ $offer_3 ? $offer_3 : '3' }} เดือน" id="extra_2"
-                                wire:model.lazy="offer_3" /></span> --}}
-
-                                    {{-- @if ($offer_3)
-                        <span class="p-2 block">
-                            <x-native-select label="ระยะเวลา" placeholder="เลือกระยะเวลา" :options="[
-                                ['name' => '3 เดือน', 'id' => 3],
-                                ['name' => '6 เดือน', 'id' => 6],
-                                ['name' => '9 เดือน', 'id' => 9],
-                                ['name' => '12 เดือน', 'id' => 12],
-                                ['name' => '15 เดือน', 'id' => 15],
-                                ['name' => '18 เดือน', 'id' => 18],
-                                ['name' => '21 เดือน', 'id' => 21],
-                                ['name' => '24 เดือน', 'id' => 24],
-                                ['name' => '27 เดือน', 'id' => 27],
-                                ['name' => '30 เดือน', 'id' => 30],
-                            ]" option-label="name"
-                                option-value="id" wire:model="offer_3" />
+                        @if($client->vet->stock->current()['remaining']<=0)
+                        <span class="p-2 block pointer-events-none opacity-50">
+                            <x-checkbox lg class="rounded-full" 
+                                label="รับคำปรึกษาและเข้าร่วมโปรแกรม {{env('APP_NAME')}}" description="ไม่สามารถเลือกได้" />
                         </span>
-                        @endif --}}
+                        @else
+                            @if (env('VET_OPTION_1',true))
+                                <span class="p-2 block"><x-checkbox lg class="rounded-full" label="รับคำปรึกษาและเข้าร่วมโปรแกรม {{env('APP_NAME')}}"
+                                    id="standard"    wire:model.lazy="data.offer_1" /></span>
+                            @endif
+                            @if (env('VET_OPTION_2',true))
+                            <span class="p-2 block"><x-checkbox lg class="rounded-full" label="รับสิทธิ์พิเศษเพิ่มเติม - เข้าโปรแกรม 1 เดือน"
+                                id="extra_1" wire:model.live="data.offer_2" /></span>
+                            @endif
+            
+                            @if (env('VET_OPTION_3',true))
+                            <span class="p-2 block"><x-checkbox lg class="rounded-full" label="รับสิทธิ์พิเศษเพิ่มเติม - เข้าโปรแกรม {{ $data['offer_month']??3 }} เดือน"
+                                id="extra_2" wire:model.live="data.offer_3" /></span>
+                            @endif
+                        @endif
+                        @if ($data['offer_3'])
+                            {{-- @if (env('VET_OPTION_3_option',true)) --}}
+                            <span class="p-2 {{env('VET_OPTION_3_option')?'block':'hidden'}}">
+                                <x-native-select label="ระยะเวลา" placeholder="เลือกระยะเวลา" 
+                                    :options="[
+                                        ['name' => '3 เดือน',  'value' => 3],
+                                        ['name' => '6 เดือน',  'value' => 6],
+                                        ['name' => '9 เดือน',  'value' => 9],
+                                        ['name' => '12 เดือน',  'value' => 12],
+                                        ['name' => '15 เดือน',  'value' => 15],
+                                        ['name' => '18 เดือน',  'value' => 18],
+                                        ['name' => '21 เดือน',  'value' => 21],
+                                        ['name' => '24 เดือน',  'value' => 24],
+                                        ['name' => '27 เดือน',  'value' => 27],
+                                        ['name' => '30 เดือน',  'value' => 30],
+                                        ]" 
+                                    option-label="name" option-value="value"
+                                    wire:model.live="data.offer_month" />
+                            </span>
+                            {{-- @endif --}}
+                        @endif
 
                     <div class="flex justify-between py-2 text-center mt-auto" wire:loading.remove>
                         <x-button lg {{-- right-icon="chevron-right"  --}} primary
                             class="bg-gradient-to-br  from-warning-600 to-negative-600 rounded-2xl" {{-- wire:click="varifyOTP" --}}
-                            wire:click="next(6)" type="button" label="ยกเลิก" />
+                            wire:click="step(3)" type="button" label="ยกเลิก" />
 
                         <x-button lg right-icon="chevron-right" primary
                             class="bg-gradient-to-br from-gradient-start to-gradient-end rounded-2xl" {{-- wire:click="varifyOTP" --}}
-                            wire:click="verifyVetCode" type="button" label="รับสิทธิ์" />
+                            wire:click="checkRmktVet" type="button" label="รับสิทธิ์" />
                     </div>
                     <div class="py-2 text-center flex justify-center mt-auto" wire:loading>
                         กำลังดำเนินการ...

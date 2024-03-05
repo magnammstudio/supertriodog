@@ -30,7 +30,7 @@ class Vets extends Component
     public function render(){
         return view('livewire.admin.vets',[
             'total_stock'=>stock::sum('total_stock'),
-            'vets'=>vet::with('client')->with('stock')
+            'vets'=>vet::with('client')->with('rmktClients')->with('stock')
                 ->when($this->search['text']!=null,function($queryString){
                     $text = $this->search['text'];
                     return $queryString->where('vet_name','like','%'.$text.'%')

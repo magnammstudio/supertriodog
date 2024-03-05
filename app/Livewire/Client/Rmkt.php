@@ -7,6 +7,7 @@ use App\Models\rmktClient;
 use App\Models\vet;
 use Livewire\Component;
 use Illuminate\Support\Str;
+use Illuminate\Validation\Rule;
 
 use GuzzleHttp\Client as smsClient;
 
@@ -18,11 +19,15 @@ class Rmkt extends Component
 
     public $vet_list;
     public $selected_vet;
+    public $chooseMonth;
+
+    public $debug;
     // page note
 
     protected $rules=[
         'data.phone' => ['required', 'numeric','digits:10','min:10','regex:/^([0-9\s\(\)]*)$/'],
         'data.pin' => ['required', 'string', 'max:255'],
+        'data.vet_id' => ['required', 'string', 'max:255'],
     ];
 
 
@@ -30,16 +35,45 @@ class Rmkt extends Component
         
         $this->data=[
             'phone'=>$phone,
+            'offer_1'=>null,
+            'offer_2'=>null,
+            'offer_3'=>null,
         ];
+
         if($phone == null){
             $this->currentStep=-1;
         }else{
             $this->client = client::where('phone',$phone)->first();
-            if($this->client->rmkt->last()){
-                $this->client->vet_id=$this->client->rmkt->last()->vet_id;
-                // dd($this->client->rmkt->last()->vet);
-            }
             if($this->client){
+                $clientLastRMKTActive = $this->client->rmkt->where('active_status','activated')->last();
+                if($clientLastRMKTActive){
+                    $this->client->option_1=$clientLastRMKTActive->option_1;
+                    $this->client->option_2=$clientLastRMKTActive->option_2;
+                    $this->client->option_3=$clientLastRMKTActive->option_3;
+
+                    $this->debug='client have active rmkt data';
+                    // client have rmkt active data 
+                    // client last time active remarketing 
+                    $this->client->vet_id=$clientLastRMKTActive->vet_id;
+                    $this->data['offer_1']=null;
+                    $this->data['offer_2']=null;
+                    $this->data['offer_3']=null;
+                }else{
+                    $this->debug='client no active rmkt data or pending';   
+                }
+                if($this->client->option_2){
+                    $this->data['offer_1']=null;
+                    $this->data['offer_2']=null;
+                    $this->data['offer_3']=true;
+                }else{
+                    $this->data['offer_1']=null;
+                    $this->data['offer_2']=true;
+                    $this->data['offer_3']=null;
+                }
+                // $this->client->option_1=$this->data['offer_1'];
+                // $this->client->option_2=$this->data['offer_2'];
+                // $this->client->option_3=$this->data['offer_3'];
+                // dd($this->data);
                 $this->currentStep=3;
             }else{
                 redirect(route('client.rmkt'));
@@ -99,7 +133,7 @@ class Rmkt extends Component
         if(env('SMS_API', false)){
             $otpVerify=$this->verifyOTP();
         }else{
-
+            $otpVerify=true;
         }
 
         // go next
@@ -118,24 +152,75 @@ class Rmkt extends Component
     }
     public function savermktdata(){
         // validate data
+
+        // $validatedData = $this->validateOnly('data.pin');
+        // dd($this->client,$vet);
+        // check stock and option
         // save to rmkt
 
         // dd($this->rmktClient,$this->client->vet);
+        // $this->rmktClient->id = 'TRIO'.Str::padLeft($this->rmktClient->id, 5, '0');
+        
+        // dd($this->rmktClient,$this->client);
         $this->rmktClient=rmktClient::updateOrCreate([
             'client_id'=>$this->client->id,
             'active_status'=>'pending'
         ],[
             'vet_id'=>$this->selected_vet['id']??$this->client->vet_id,
-            'option_1'=>$this->offer_1??null,
-            'option_2'=>$this->offer_2??null,
-            'option_3'=>$this->offer_3??null,
-            'active_date'=>now(),
-            'active_status'=>'activated'
+            'option_1'=>$this->data['offer_1']??null,
+            'option_2'=>$this->data['offer_2']??null,
+            'option_3'=>$this->data['offer_3']??null,
+            // 'active_date'=>now(),
+            // 'active_status'=>'activated'
         ]);
-        // $this->rmktClient->id = 'TRIO'.Str::padLeft($this->rmktClient->id, 5, '0');
-        $this->rmktClient->save();
-        // dd($this->rmktClient,$this->client);
-        $this->currentStep =8;
+        // dd($this->data,$this->rmktClient,$this->selected_vet['id']??$this->client->vet_id,$this->client);
+        // $this->rmktClient->save();
+
+        if(env('RMKT_GAME',false)){
+            $this->currentStep =5;
+            //select month and send badge
+        }else{
+            $this->currentStep =5;
+            if($this->chooseMonth == 1){
+                // dd('select month');
+            }else{
+                $this->rmktClient->active_date=now();
+                $this->rmktClient->active_status='activated';
+                $this->rmktClient->save();
+                $this->currentStep =8;
+            }
+        }
+    }
+    public function checkRmktVet(){
+        // check vet id 
+        if(!env('VET_OPTION_3_option') && $this->data['offer_3']){
+            $this->data['offer_month']=3;
+        }
+        
+        $validatedData = $this->validateOnly('data.vet_id');
+        $validatedData = $this->validate([
+            'data.vet_id'=>['required'],
+            'data.offer_1'=>[Rule::requiredIf(function(){return $this->data['offer_2']==null && $this->data['offer_3']==null;})],
+            'data.offer_2'=>[Rule::requiredIf(function(){return $this->data['offer_1']==null && $this->data['offer_3']==null;})],
+            'data.offer_3'=>[Rule::requiredIf(function(){return $this->data['offer_1']==null && $this->data['offer_2']==null;})],
+            'data.offer_month'=>['required_unless:data.offer_3,null'],
+        ]);
+        $vet = $this->selected_vet['id']??$this->client->vet_id;
+
+        if($this->data['vet_id']==$this->rmktClient->vet_id){
+            $this->rmktClient->option_1=$this->data['offer_1']??null;
+            $this->rmktClient->option_2=$this->data['offer_2']??null;
+            $this->rmktClient->option_3=$this->data['offer_month']??null;
+
+            $this->rmktClient->active_status = 'activated';
+            $this->rmktClient->active_date = now();
+            $this->rmktClient->save();
+
+            return $this->step(8);
+        }else{
+            return $this->addError('data.vet_id', 'PIN Code ไม่ถูกต้อง');
+        }
+        // dd($this->rmktClient,$this->rmktClient->vet_id,$vet,$this->data);
     }
     public function step($goto=null){
         $this->currentStep =$goto??$this->currentStep+1;
