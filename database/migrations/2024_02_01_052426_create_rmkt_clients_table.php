@@ -20,7 +20,7 @@ return new class extends Migration
             $table->integer('option_3')->nullable();
             $table->dateTime('active_date')->nullable();
             $table->string('active_status')->nullable();
-            $table->string('remark')->nullable();
+            $table->json('remark')->nullable();
             $table->timestamps();
         });
     }

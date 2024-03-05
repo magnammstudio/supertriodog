@@ -17,6 +17,27 @@
                     :primary="Str::contains(Route::current()->getName(),'admin.vets')" 
                     href="{{route('admin.vets')}}" />
                 @endcan
+                @can('isMaster')
+
+                    <x-button label="MA" icon="template" 
+                        :flat="!Str::contains(Route::current()->getName(),'ma.vet')" 
+                        :primary="Str::contains(Route::current()->getName(),'ma.vet')" 
+                        :href="route('ma.vet')" />
+
+                    <x-button label="Client" icon="template" 
+                    :flat="!Str::contains(Route::current()->getName(),'admin.client')" 
+                    :primary="Str::contains(Route::current()->getName(),'admin.client')" 
+                    :href="route('admin.client.index')" />
+
+                    <x-button label="MA" icon="template" 
+                        :flat="!Str::contains(Route::current()->getName(),'ma.vet')" 
+                        :primary="Str::contains(Route::current()->getName(),'ma.vet')" 
+                        :href="route('ma.vet')" />
+                    
+                    {{-- <x-button label="Register" :href="route('admin.register')"/> --}}
+                    {{-- <x-button label="edit" :href="route('admin.edit',Auth::user())"/> --}}
+                            
+                @endcan
             
                 <div class="ml-auto flex gap-2 items-center">
                     @can('isAdmin')

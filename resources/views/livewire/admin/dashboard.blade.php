@@ -145,10 +145,12 @@
                         <td class="align-top md:border border-primary-blue p-2 ml-2 table md:table-cell">
                             <span class="md:hidden inline-block min-w-max mr-2">วันที่</span> {{$client->created_at->toDateString()}}
                         </td>
+
+                        @isset($client->vet)
                         <td class="align-top md:border border-primary-blue p-2 ml-2 table md:table-cell">
                             <x-button flat label="{{$vets->where('id',$client->vet_id)->first()->vet_name}}" :href="route('admin.vet',['id'=>$client->vet->id])" />
-                                
                         </td>
+                        @endisset
                         <td class="align-top md:border border-primary-blue p-2 ml-2 table md:table-cell">
                             {{$client->name}} 
                             @if (Auth::user()->isAdmin)
@@ -163,6 +165,7 @@
                             <span class="md:hidden inline-block min-w-max mr-2">สถานะ</span>
                             {{$client->active_status}}
                         </td>
+                        @isset($client->vet)
                         <td class="align-top text-center md:border border-primary-blue p-2 ml-2 table md:table-cell">
                             <span class="md:hidden inline-block min-w-max mr-2">สิทธิ์ทั้งหมด</span>
                             {{$vets->find($client->vet_id)->stock->total_stock }}
@@ -179,6 +182,7 @@
                             <span class="md:hidden inline-block min-w-max mr-2">สินค้าขาด</span>
                             {{$vets->find($client->vet_id)->stock->current()['outQuota']}}
                         </td>
+                        @endisset
                     </tr>
                 @endforeach
             </tbody>

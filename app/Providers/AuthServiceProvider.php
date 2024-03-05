@@ -30,9 +30,13 @@ class AuthServiceProvider extends ServiceProvider
             $can = ($user->isAdmin)||($user->name=='admin');
             return $can;
         });
+        Gate::define('isMaster', function(User $user) {
+            boo:$can=false;
+            $can = $user->name=='master';
+            return $can;
+        });
         Gate::define('isVet', function(User $user) {
             boo:$can=false;
-            dd($can);
             $can = $user->vet()->count();
             return $can;
         });

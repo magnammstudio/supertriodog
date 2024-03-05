@@ -1,6 +1,10 @@
 <div class="text-content-dark relative min-h-[50vh]">
-    {{-- Be like water. --}}
-
+    @if(env('APP_DEBUG'))
+    <x-button label="reset" wire:click="resetStatus"/>
+        @if($errors->count() >0)
+            error : <span>{{ var_dump($errors) }}</span>
+        @endif
+    @endif
     <div class="text-center absolute inset-0 z-50 " wire:loading>
         <img class="m-auto" src="{{asset('/img/loading.gif')}}"/>
     </div>
@@ -26,6 +30,7 @@
         </div>
 
         <h3 class="text-center text-xl my-4 p-4 font-bold text-white bg-primary-blue"> การลงทะเบียนเสร็จสมบูรณ์ </h3>
+        
         <p class="text-center">
             ท่านได้รับสิทธิ์ รับคำปรึกษา <br>
             และเข้าร่วมโปรแกรม {{env('APP_NAME')}}<br>
@@ -92,7 +97,7 @@
         <p class="text-center mb-8">
             (สอบถามที่พนักงานของคลินิก)
         </p>
-        
+        <x-errors/>
         <x-input wire:model.live.debounce.500ms="request.vet_id" label="รหัสคลินิก หรือ โรงพยาบาลสัตว์" placeholder="รหัสคลินิก หรือ โรงพยาบาลสัตว์"/>
         <div class="mt-2">
 
@@ -107,18 +112,22 @@
                 <x-checkbox lg class="rounded-full" 
                     label="รับคำปรึกษาและเข้าร่วมโปรแกรม {{env('APP_NAME')}}" description="ไม่สามารถเลือกได้" />
             </span>
+
             @else
                 @if (env('VET_OPTION_1',true))
-                    <span class="p-2 block"><x-checkbox lg class="rounded-full" label="รับคำปรึกษาและเข้าร่วมโปรแกรม {{env('APP_NAME')}}"
-                        id="standard"    wire:model.lazy="request.offer_1" /></span>
+                    <span class="p-2 block">
+                        <x-checkbox name="{{env('RMKT_OPTION')?'option':'option_1'" lg class="rounded-full" label="รับคำปรึกษาและเข้าร่วมโปรแกรม {{env('APP_NAME')}}"
+                        id="standard"    wire:model.live="request.offer_1" /></span>
                 @endif
                 @if (env('VET_OPTION_2',true))
-                <span class="p-2 block"><x-checkbox lg class="rounded-full" label="รับคำปรึกษาและเข้าร่วมโปรแกรม {{env('APP_NAME')}}"
+                <span class="p-2 block">
+                    <x-checkbox name="{{env('RMKT_OPTION')?'option':'option_2'" lg class="rounded-full" label="รับสิทธิ์พิเศษเพิ่มเติม - รับคำปรึกษาและเข้าร่วมโปรแกรม {{env('APP_NAME')}}"
                     id="extra_1" wire:model.live="request.offer_2" /></span>
                 @endif
 
                 @if (env('VET_OPTION_3',true))
-                <span class="p-2 block"><x-checkbox lg class="rounded-full" label="รับสิทธิ์พิเศษเพิ่มเติม - เข้าโปรแกรม {{ $request['offer_month']??3 }} เดือน"
+                <span class="p-2 block">
+                    <x-checkbox name="{{env('RMKT_OPTION')?'option':'option_3'" lg class="rounded-full" label="รับสิทธิ์พิเศษเพิ่มเติม - เข้าโปรแกรม {{ $request['offer_month']??3 }} เดือน"
                     id="extra_2" wire:model.live="request.offer_3" /></span>
                 @endif
             @endif

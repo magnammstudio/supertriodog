@@ -9,6 +9,7 @@ class vet extends Model
 {
     use HasFactory;
     protected $primaryKey = 'id';
+    
     protected $fillable = [
         'id',
         'vet_name',
@@ -28,6 +29,9 @@ class vet extends Model
     }
     public function client(){
         return $this->hasMany(client::class);
+    }
+    public function rmktClients(){
+        return $this->hasMany(rmktClient::class);
     }
     public function stock(){
         return $this->belongsTo(stock::class);

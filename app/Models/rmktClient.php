@@ -21,7 +21,7 @@ class rmktClient extends Model
 
     public function profile()
     {
-        return $this->belongsTo(client::class);
+        return $this->belongsTo(client::class,'client_id','id');
     }
     public function vet()
     {

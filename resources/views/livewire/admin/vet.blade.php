@@ -118,6 +118,7 @@
                                 <x-badge primary label="Pet owner's Name" />
                             </div>
                         </th>
+                        @if(env('VET_OPTION_1'))
                         <th class="w-20 text-primary-lite hidden md:table-cell">
                                 <x-button flat white class="pointer-events-none" >
                                     รับคำปรึกษาและเข้าร่วม <br>โปรแกรม {{env('APP_NAME')}}
@@ -125,6 +126,8 @@
                                     <br>
                                 <x-badge primary label="(Get free consultation and a tablet)" />
                         </th>
+                        @endif
+                        @if(env('VET_OPTION_2'))
                         <th class="w-20 text-primary-lite hidden md:table-cell">
                                 <x-button flat white class="pointer-events-none" >
                                     รับสิทธิ์พิเศษเพิ่มเติม <br> เข้าร่วมโปรแกรม 1 เดือน
@@ -132,12 +135,15 @@
                                 <x-badge primary label="(Extra tablet sold)" />
                             </div>
                         </th>
-                        <th class="w-20 text-primary-lite hidden md:table-cell" colspan="2">
+                        @endif
+                        @if(env('VET_OPTION_3'))
+                        <th class="w-20 text-primary-lite hidden md:table-cell" colspan="env('VET_OPTION_3_option')?'1':'2'}}">
                                 <x-button flat white class="pointer-events-none" >
                                     รับสิทธิ์พิเศษเพิ่มเติม <br> เข้าร่วมโปรแกรม 3 เดือน
                                 </x-button><br>
                                 <x-badge primary label="(Extra box sold)" />
                         </th>
+                        @endif
                         <th class="w-24 hidden md:table-cell text-primary-lite">
                                 <x-button flat white class="pointer-events-none" label="น้ำหนัก  แมว"/><br>
                                 <x-badge primary label="Pet's weight" />
@@ -164,29 +170,37 @@
                                 <x-button xs negative icon="x" wire:click="delete({{$client}})" class="ml-auto" wire:confirm="คุณต้องการยืนยันการลบหรือไม่"/>
                             @endif
                         </td>
+                        @if(env('VET_OPTION_1'))
                         <td class="align-top md:border mx-2 whitespace-nowrap border-primary-blue p-2 hidden w-full md:w-auto md:table-cell md:text-center ">
                             @if($client->option_1)
                             <x-badge.circle positive icon="check" class="w-5 h-5 m-auto p-2 inline-block" />
                             <span class="md:hidden inline-block min-w-max mx-2 my-1">เข้าร่วม โปรแกรม {{env('APP_NAME')}}</span>
                             @endif
                         </td>
+                        @endif
+                        @if(env('VET_OPTION_2'))
                         <td class="align-top md:border mx-2 whitespace-nowrap border-primary-blue p-2 hidden w-full md:w-auto md:table-cell md:text-center ">
                             @if($client->option_2 )
                             <x-badge.circle positive icon="check" class="w-5 h-5 m-auto p-2 inline-block" />
                             <span class="md:hidden inline-block min-w-max mx-2 my-1">เข้าร่วมโปรแกรม 1 เดือน</span>
                             @endif
                         </td>
+                        @endif
+                        @if(env('VET_OPTION_3'))
                         <td class="align-top md:border mx-2 whitespace-nowrap border-primary-blue p-2 hidden w-full md:w-auto md:table-cell md:text-center ">
                             @if($client->option_3 )
                             <x-badge.circle positive icon="check" class="w-5 h-5 m-auto p-2 inline-block" />
                             @endif
                         </td>
-                        <td class="align-top md:border mx-2 whitespace-nowrap border-primary-blue p-2 hidden w-full md:w-auto md:table-cell md:text-center ">
-                            @if($client->option_3 )
-                            <span class="md:hidden inline-block min-w-max mx-2 my-1">เข้าร่วมโปรแกรม </span>{{ $client->option_3 }} เดือน
-                            @endif
+                        @if(env('VET_OPTION_3_option'))
+                            <td class="align-top md:border mx-2 whitespace-nowrap border-primary-blue p-2 hidden w-full md:w-auto md:table-cell md:text-center ">
+                                @if($client->option_3 )
+                                <span class="md:hidden inline-block min-w-max mx-2 my-1">เข้าร่วมโปรแกรม </span>{{ $client->option_3 }} เดือน
+                                @endif
 
-                        </td>
+                            </td>
+                        @endif
+                        @endif
                         <td class="align-top md:border mx-2 whitespace-nowrap border-primary-blue p-2 md:text-center table w-full md:w-auto md:table-cell">
                             <ul class="md:hidden">
                                 @if($client->option_1)
