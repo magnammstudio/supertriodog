@@ -148,17 +148,11 @@
                             <li>น้ำหนัก : {{ $client->pet_weight ?? '' }}</li>
                             <li>อายุ : {{ $client->pet_age_year ?? '' }} ปี {{ $client->pet_age_month ?? '' }} เดือน</li>
                             <li>คลินิกหรือโรงพยาบาลสัตว์ : {{ $client->vet->vet_name ?? '' }}</li>
-
-                            {{-- if lasttime = none 1=3 or 3=1
-                            if lasttime = pending month = lasttime --}}
-                            <hr>{{$debug}}<hr>
-                            @if (!env('RMKT_GAME'))
-                                {{var_dump($data)}}<hr>
-                                <li>{{$client->option_1?'':'รับสิทธิ์พิเศษเพิ่มเติม - '}} เข้าโปรแกรม {{ $client->option_1 ?? $client->option_2 ?? $client->option_3 }} เดือน</li>
-                            @endif
-                            {{-- @if (!env('RMKT_OPTION'))
-                            <li>{{$client->option_1?'':'รับสิทธิ์พิเศษเพิ่มเติม - '}} เข้าโปรแกรม {{ $client->option_1 ?? $client->option_2 ?? $client->option_3 }} เดือน</li>
-                            @endif --}}
+                            @isset($chooseMonth)
+                            <hr>
+                                <li>เข้าโปรแกรม {{ $chooseMonth }} เดือน</li>
+                            @endisset
+                            
                         </ul>
 
                     </div>
