@@ -45,31 +45,31 @@ class Rmkt extends Component
         }else{
             $this->client = client::where('phone',$phone)->first();
             if($this->client){
-                $clientLastRMKTActive = $this->client->rmkt->where('active_status','activated')->last();
-                if($clientLastRMKTActive){
-                    $this->client->option_1=$clientLastRMKTActive->option_1;
-                    $this->client->option_2=$clientLastRMKTActive->option_2;
-                    $this->client->option_3=$clientLastRMKTActive->option_3;
+                // $clientLastRMKTActive = $this->client->rmkt->where('active_status','activated')->last();
+                // if($clientLastRMKTActive){
+                //     $this->client->option_1=$clientLastRMKTActive->option_1;
+                //     $this->client->option_2=$clientLastRMKTActive->option_2;
+                //     $this->client->option_3=$clientLastRMKTActive->option_3;
 
-                    $this->debug='client have active rmkt data';
-                    // client have rmkt active data 
-                    // client last time active remarketing 
-                    $this->client->vet_id=$clientLastRMKTActive->vet_id;
-                    $this->data['offer_1']=null;
-                    $this->data['offer_2']=null;
-                    $this->data['offer_3']=null;
-                }else{
-                    $this->debug='client no active rmkt data or pending';   
-                }
-                if($this->client->option_2){
-                    $this->data['offer_1']=null;
-                    $this->data['offer_2']=null;
-                    $this->data['offer_3']=true;
-                }else{
-                    $this->data['offer_1']=null;
-                    $this->data['offer_2']=true;
-                    $this->data['offer_3']=null;
-                }
+                //     $this->debug='client have active rmkt data';
+                //     // client have rmkt active data 
+                //     // client last time active remarketing 
+                //     $this->client->vet_id=$clientLastRMKTActive->vet_id;
+                //     $this->data['offer_1']=null;
+                //     $this->data['offer_2']=null;
+                //     $this->data['offer_3']=null;
+                // }else{
+                //     $this->debug='client no active rmkt data or pending';   
+                // }
+                // if($this->client->option_2){
+                //     $this->data['offer_1']=null;
+                //     $this->data['offer_2']=null;
+                //     $this->data['offer_3']=true;
+                // }else{
+                //     $this->data['offer_1']=null;
+                //     $this->data['offer_2']=true;
+                //     $this->data['offer_3']=null;
+                // }
                 // $this->client->option_1=$this->data['offer_1'];
                 // $this->client->option_2=$this->data['offer_2'];
                 // $this->client->option_3=$this->data['offer_3'];
@@ -83,12 +83,38 @@ class Rmkt extends Component
     }
     public function render()
     {
+        $this->checkRmktStatus();
         return view('livewire.client.rmkt');
+    }
+    public function checkRmktStatus(){
+        if($this->client){
+            $rmktClient=$this->client->rmkt->last();
+            if($rmktClient){
+                $rmktClientActive=$this->client->rmkt->where('active_status','activated')->last();
+                if($rmktClient==$rmktClientActive){
+                    // dd('user can select');
+                    $lastSelect=$rmktClient->option_1??$rmktClient->option_2??$rmktClient->option_3;
+                }else{
+                    $lastSelect=$rmktClientActive->option_1??$rmktClientActive->option_2??$rmktClientActive->option_3;
+                    // dd('swap');
+                    // $rmktClient
+                }
+            }else{
+                $lastSelect=$this->client->option_1??$this->client->option_2??$this->client->option_3;
+                // dd('no rmkt swap');
+            }
+
+            if(isset($lastSelect)){
+                $this->chooseMonth=$lastSelect==1?3:1;
+                // dd($this->chooseMonth);
+            }
+            // dd($rmktClient);
+        }
+
     }
     public function changeVet(){
         // load vet and province
         // step(4)
-        
         $vet=vet::all();
         $this->vet_list['province'] = $vet->unique('vet_province')->pluck('vet_province');
 
@@ -98,7 +124,6 @@ class Rmkt extends Component
         $this->selected_vet['id']=null;
         $this->vet_list['name'] = $vet->pluck('vet_name','id');
         $this->currentStep =4;
-        // dd($this->vet_list);
     }
     public function verifyPhoneNumber(){
         // validate phone number
@@ -118,11 +143,6 @@ class Rmkt extends Component
                 $this->currentStep =1;    
             }
             
-            // if(env('SMS_API', false)){
-            //     $this->confirmation();
-            // }else{
-    
-            // }
         }else{
             $this->addError('data.phone', 'ไม่พบข้อมูลลงทะเบียน');
         }
@@ -145,23 +165,12 @@ class Rmkt extends Component
         }
     }
     public function updateVet(){
-        // dd($this->selected_vet['id']);
         $vet = Vet::find($this->selected_vet['id']);
         $this->client->vet_id = $vet->id;
         $this->currentStep =3;
     }
     public function savermktdata(){
-        // validate data
-
-        // $validatedData = $this->validateOnly('data.pin');
-        // dd($this->client,$vet);
-        // check stock and option
-        // save to rmkt
-
-        // dd($this->rmktClient,$this->client->vet);
-        // $this->rmktClient->id = 'TRIO'.Str::padLeft($this->rmktClient->id, 5, '0');
         
-        // dd($this->rmktClient,$this->client);
         $this->rmktClient=rmktClient::updateOrCreate([
             'client_id'=>$this->client->id,
             'active_status'=>'pending'
@@ -180,34 +189,37 @@ class Rmkt extends Component
             $this->currentStep =5;
             //select month and send badge
         }else{
-            $this->currentStep =5;
             if($this->chooseMonth == 1){
-                // dd('select month');
-            }else{
+                $this->rmktClient->option_2=1;
                 $this->rmktClient->active_date=now();
                 $this->rmktClient->active_status='activated';
                 $this->rmktClient->save();
                 $this->currentStep =8;
+            }elseif($this->chooseMonth == 3){
+                $this->rmktClient->option_3=3;
+                $this->rmktClient->active_date=now();
+                $this->rmktClient->active_status='activated';
+                $this->rmktClient->save();
+                $this->currentStep =8;
+            }else{
+                $this->currentStep =5;
             }
         }
     }
     public function checkRmktVet(){
         // check vet id 
-        if(!env('VET_OPTION_3_option') && $this->data['offer_3']){
-            $this->data['offer_month']=3;
-        }
         
-        $validatedData = $this->validateOnly('data.vet_id');
-        $validatedData = $this->validate([
-            'data.vet_id'=>['required'],
-            'data.offer_1'=>[Rule::requiredIf(function(){return $this->data['offer_2']==null && $this->data['offer_3']==null;})],
-            'data.offer_2'=>[Rule::requiredIf(function(){return $this->data['offer_1']==null && $this->data['offer_3']==null;})],
-            'data.offer_3'=>[Rule::requiredIf(function(){return $this->data['offer_1']==null && $this->data['offer_2']==null;})],
-            'data.offer_month'=>['required_unless:data.offer_3,null'],
+        $this->validate([
+            // 'request.offer_1'=>[],
+            'data.vet_id'=>['required','exists:vets,id'],
+            'data.offer_2'=>['required_if:data.offer_3,null'],
+            'data.offer_3'=>['required_if:data.offer_2,null'],
+        ],[
+            'data.*'=>'จำเป็นต้องระบุ',
         ]);
+        
         $vet = $this->selected_vet['id']??$this->client->vet_id;
-
-        if($this->data['vet_id']==$this->rmktClient->vet_id){
+        if($this->data['vet_id']==$vet){
             $this->rmktClient->option_1=$this->data['offer_1']??null;
             $this->rmktClient->option_2=$this->data['offer_2']??null;
             $this->rmktClient->option_3=$this->data['offer_month']??null;
@@ -220,7 +232,6 @@ class Rmkt extends Component
         }else{
             return $this->addError('data.vet_id', 'PIN Code ไม่ถูกต้อง');
         }
-        // dd($this->rmktClient,$this->rmktClient->vet_id,$vet,$this->data);
     }
     public function step($goto=null){
         $this->currentStep =$goto??$this->currentStep+1;
@@ -325,5 +336,30 @@ class Rmkt extends Component
         $vet = Vet::find($id);
         $this->selected_vet['name']=$vet->vet_name;
         $this->selected_vet['address']=$vet->vet_area.' '.$vet->vet_city.', '.$vet->vet_province.' ';
+    }
+
+    public function updatedDataOffer1($toggle){
+        $this->data['offer_1']=$this->data['offer_1']==true?true:null;
+        $this->data['offer_2']=null;
+        $this->data['offer_3']=null;
+        if(!env('VET_OPTION_3_option') || $this->data['offer_3']!=true){
+            $this->data['offer_month']=null;
+        }
+    }
+    public function updatedDataOffer2($toggle){
+        $this->data['offer_1']=null;
+        $this->data['offer_2']=$this->data['offer_2']==true?true:null;
+        $this->data['offer_3']=null;
+        if(!env('VET_OPTION_3_option') || $this->data['offer_3']!=true){
+            $this->data['offer_month']=null;
+        }
+    }
+    public function updatedDataOffer3($toggle){
+        $this->data['offer_1']=null;
+        $this->data['offer_2']=null;
+        $this->data['offer_3']=$this->data['offer_3']==true?true:null;
+        if(!env('VET_OPTION_3_option') || $this->data['offer_3']==true){
+            $this->data['offer_month']=3;
+        }
     }
 }
