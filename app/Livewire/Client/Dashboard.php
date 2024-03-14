@@ -62,23 +62,23 @@ class Dashboard extends Component
         }
         return view('livewire.client.dashboard');
     }
-    public function updatedRequestOffer1($toggle){
-        // $this->request['offer_1']=$this->request['offer_1']??null;
-        $this->request['offer_2']=null;
-        $this->request['offer_3']=null;
-    }
-    public function updatedRequestOffer2($toggle){
-        // dd($toggle);
-        $this->request['offer_1']=null;
-        // $this->request['offer_2']=$this->request['offer_2']??null;
-        $this->request['offer_3']=null;
-    }
-    public function updatedRequestOffer3($toggle){
-        // dd($toggle);
-        $this->request['offer_1']=null;
-        $this->request['offer_2']=null;
-        // $this->request['offer_3']=$this->request['offer_3']??null;
-    }
+    // public function updatedRequestOffer1($toggle){
+    //     // $this->request['offer_1']=$this->request['offer_1']??null;
+    //     $this->request['offer_2']=null;
+    //     $this->request['offer_3']=null;
+    // }
+    // public function updatedRequestOffer2($toggle){
+    //     // dd($toggle);
+    //     $this->request['offer_1']=null;
+    //     // $this->request['offer_2']=$this->request['offer_2']??null;
+    //     $this->request['offer_3']=null;
+    // }
+    // public function updatedRequestOffer3($toggle){
+    //     // dd($toggle);
+    //     $this->request['offer_1']=null;
+    //     $this->request['offer_2']=null;
+    //     // $this->request['offer_3']=$this->request['offer_3']??null;
+    // }
     public function updated($propertyName)
     {
         $this->resetErrorBag();
