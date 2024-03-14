@@ -143,7 +143,7 @@
                 <span class="my-2">
                     <x-radio id="weigth-3" value="5.1-10 กก." label="5.1-10 กก." wire:model.defer="regClient.pet_weight" />
                 </span>
-                {{-- <span class="my-2">
+                <span class="my-2">
                     <x-radio id="weigth-4" value="10.1-20 กก." label="10.1-20 กก." wire:model.defer="pet_weight" />
                 </span>
                 <span class="my-2">
@@ -151,7 +151,7 @@
                 </span>
                 <span class="my-2">
                     <x-radio id="weigth-6" value="40.1-60 กก." label="40.1-60 กก." wire:model.defer="pet_weight" />
-                </span> --}}
+                </span>
             </div>
 
             <div class="grid grid-cols-2 gap-2">
