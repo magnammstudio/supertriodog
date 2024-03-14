@@ -94,6 +94,10 @@ Route::name('client.')->prefix('client')->group(function (){
         
         Route::get('/profile/{client_code?}', ClientProfile::class)->name('profile');
         Route::get('/download/', [downloads::class,'client'])->name('download');
+    // }else{
+        Route::fallback(function () {
+            return view('maintenance');
+        });
     // }
 });
 

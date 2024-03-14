@@ -89,6 +89,7 @@ class Rmkt extends Component
     public function checkRmktStatus(){
         if($this->client){
             $rmktClient=$this->client->rmkt->last();
+            
             if($rmktClient){
                 $rmktClientActive=$this->client->rmkt->where('active_status','activated')->last();
                 if($rmktClient==$rmktClientActive){
@@ -100,7 +101,13 @@ class Rmkt extends Component
                     // $rmktClient
                 }
             }else{
-                $lastSelect=$this->client->option_1??$this->client->option_2??$this->client->option_3;
+                if($this->client->option_2 && $this->client->option_3){
+                    dd('send remider in 25 day');
+                    // status can select
+                }else{
+                    dd('send remider in 7 day');
+                    $lastSelect=$this->client->option_1??$this->client->option_2??$this->client->option_3;
+                }
                 // dd('no rmkt swap');
             }
 
