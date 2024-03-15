@@ -86,18 +86,20 @@ class Dashboard extends Component
 
     public function verifyVet(){
         // validate
-        $this->request['offer_1']=$this->request['offer_1']??null;
-        $this->request['offer_2']=$this->request['offer_2']??null;
-        $this->request['offer_3']=$this->request['offer_3']??null;
-
+        $this->request['offer_1']=$this->request['offer_1']==true?true:null;
+        $this->request['offer_2']=$this->request['offer_2']==true?true:null;
+        $this->request['offer_3']=$this->request['offer_3']==true?true:null;
         $this->validate([
             // 'request.offer_1'=>[],
             'request.vet_id'=>['required','exists:vets,id'],
             'request.offer_2'=>['required_if:request.offer_3,null'],
             'request.offer_3'=>['required_if:request.offer_2,null'],
         ],[
-            'request.*'=>'จำเป็นต้องระบุ',
+            'required'=>'จำเป็นต้องระบุ',
+            'required_if'=>'จำเป็นต้องระบุ',
+            'exists'=>'ไม่ถูกต้อง'
         ]);
+        // dd($this->request);
         
         // $this->request['offer_month']=$this->request['offer_3']?3:null;
         // $this->request['offer_month']=$this->request['offer_3']?$this->request['offer_month']:null;
