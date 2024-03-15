@@ -137,7 +137,7 @@
                         </th>
                         @endif
                         @if(env('VET_OPTION_3'))
-                        <th class="w-20 text-primary-lite hidden md:table-cell" colspan="env('VET_OPTION_3_option')?'1':'2'}}">
+                        <th class="w-20 text-primary-lite hidden md:table-cell" colspan="env('VET_OPTION_3_option')?'2':'1'}}">
                                 <x-button flat white class="pointer-events-none" >
                                     รับสิทธิ์พิเศษเพิ่มเติม <br> เข้าร่วมโปรแกรม 3 เดือน
                                 </x-button><br>
