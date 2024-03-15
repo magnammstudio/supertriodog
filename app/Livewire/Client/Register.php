@@ -160,7 +160,7 @@ class Register extends Component
             'active_status'=>'pending',
             'client_code'=>0,
         ]);
-        $client->client_code = 'REVO'.Str::padLeft($client->id, 5, '0');
+        $client->client_code = 'TRIO'.Str::padLeft($client->id, 5, '0');
         // dd($client);
         $client->save();
 
