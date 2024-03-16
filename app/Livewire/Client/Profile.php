@@ -14,7 +14,6 @@ class Profile extends Component
         $status="";
 
         $rmktClient=$this->client->rmkt->last();
-
         if($rmktClient){
             $rmktClientActive=$this->client->rmkt->where('active_status','activated')->last();
             if($rmktClient==$rmktClientActive){
@@ -28,10 +27,10 @@ class Profile extends Component
                 dd('send remider in 25 day at '.$dateSend->toDateString());
                 // status can select
             }else{
-                $dateSend = $this->client->updated_at->addDay(25);
+                $dateSend = $this->client->updated_at->addDay(7);
                 $lastSelect=$this->client->option_1??$this->client->option_2??$this->client->option_3;
                 
-                dd('send remider in 7 day last select '.$lastSelect);
+                dd('send remider in 7 day last select '.$dateSend.$lastSelect);
             }
         }
         dd($status);

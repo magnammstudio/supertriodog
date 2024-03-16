@@ -94,19 +94,19 @@ class Rmkt extends Component
                 $rmktClientActive=$this->client->rmkt->where('active_status','activated')->last();
                 if($rmktClient==$rmktClientActive){
                     // dd('user can select');
-                    $lastSelect=$rmktClient->option_1??$rmktClient->option_2??$rmktClient->option_3;
+                    // $lastSelect=$rmktClient->option_1??$rmktClient->option_2??$rmktClient->option_3;
                 }else{
-                    $lastSelect=$rmktClientActive->option_1??$rmktClientActive->option_2??$rmktClientActive->option_3;
+                    // $lastSelect=$rmktClientActive->option_1??$rmktClientActive->option_2??$rmktClientActive->option_3;
                     // dd('swap');
                     // $rmktClient
                 }
             }else{
                 if($this->client->option_2 && $this->client->option_3){
-                    dd('send remider in 25 day');
+                    // dd('send remider in 25 day select option');
                     // status can select
                 }else{
-                    dd('send remider in 7 day');
                     $lastSelect=$this->client->option_1??$this->client->option_2??$this->client->option_3;
+                    // dd('send remider in 7 day last select : '.$lastSelect);
                 }
                 // dd('no rmkt swap');
             }

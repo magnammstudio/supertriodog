@@ -17,9 +17,11 @@ class Kernel extends ConsoleKernel
         // $schedule->command('send:email')->daily();
         // torun test localy
         // php artisan schedule:work
-        $schedule->command('app:send-remarketing-email')
-            ->timezone('Asia/Bangkok')->dailyAt('10:00')
-            ->emailOutputTo('maggotgluon@gmail.com');
+        if(env('RMKT_EMAIL',false)){
+            $schedule->command('app:send-remarketing-email')
+                ->timezone('Asia/Bangkok')->dailyAt('9:00')
+                ->emailOutputTo('maggotgluon@gmail.com');
+        }
     }
 
     /**
