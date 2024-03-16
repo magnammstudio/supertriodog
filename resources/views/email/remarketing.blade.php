@@ -11,19 +11,20 @@
                 {{env('APP_TAGLINE')}}
             </div>
             
-            <img src="{{asset('img/app-banner.png')}}" class="m-auto w-full"/>
+            <img src="{{$banner}}" class="m-auto w-full"/>
             <p class="max-w-sm m-auto text-center my-4">
-                หมายเลข <b>{{$client->phone}}</b><br>
-                {{$status}}<hr>
-                
-                สามารถรับสิทธิ์ได้ที่<br>
-                <b>{{$client->vet->vet_name}}</b><br>
-                ท่านสามารถโชว์หลักฐาน<br>
-                ให้กับพนักงานได้ โดยการคลิก<br>
+                @foreach ( $status as $str )
+                    {{$str}}<br>
+                @endforeach
             </p>
-            <x-button lg primary label="รับสิทธิ์" 
+            <x-button lg primary  
             class="m-4 bg-gradient-to-br from-gradient-start to-gradient-end rounded-2xl"
-            :href="route('client.rmkt',['phone'=>$client->phone])"/>
+            :href="route('client.rmkt',['phone'=>$client->phone])">
+            <div>
+            <div class="text-3xl">คลิก!</div>
+            รับสิทธิ์
+            </div>
+            </x-button>
             <p class="max-w-sm m-auto text-center my-4">
                 กรุณากดรับสิทธิ์ขณะอยู่ที่คลินิกหรือ โรงพยาบาลสัตว์<br>
                 ที่ลงทะเบียนเท่านั้น<br>
