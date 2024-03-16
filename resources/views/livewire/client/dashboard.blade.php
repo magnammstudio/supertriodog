@@ -121,7 +121,7 @@
                 @endif
                 @if (env('VET_OPTION_2',true))
                 <span class="p-2 block">
-                    <x-checkbox name="{{env('RMKT_OPTION')?'option':'option_2'" lg class="rounded-full" label="รับสิทธิ์พิเศษเพิ่มเติม - รับคำปรึกษาและเข้าร่วมโปรแกรม {{env('APP_NAME')}}"
+                    <x-checkbox name="{{env('RMKT_OPTION')?'option':'option_2'" lg class="rounded-full" label="รับสิทธิ์พิเศษเพิ่มเติม - เข้าโปรแกรม 1 เดือน"
                     id="extra_1" wire:model.live="request.offer_2" /></span>
                 @endif
 
