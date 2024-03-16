@@ -2,10 +2,12 @@
 
 namespace App\Livewire\Admin;
 
+use App\Mail\mailRemarketing;
 use App\Models\client as clientModel;
 use App\Models\vet;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Mail;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -63,6 +65,10 @@ class Dashboard extends Component
     }
     public function updatingSearch(){
         $this->resetPage();
+    }
+    public function sendEmail(clientModel $client){
+        Mail::to($client->email)->send(new mailRemarketing($client));
+        
     }
     public function delete (clientModel $client){
         $client->delete();

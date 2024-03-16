@@ -154,7 +154,8 @@
                         <td class="align-top md:border border-primary-blue p-2 ml-2 table md:table-cell">
                             {{$client->name}} 
                             @if (Auth::user()->isAdmin)
-                                <x-button label="x" wire:click="delete({{$client}})" wire:confirm="คุณต้องการยืนยันการลบหรือไม่"/>
+                            <x-button label="x" wire:click="delete({{$client}})" wire:confirm="คุณต้องการยืนยันการลบหรือไม่"/>
+                            <x-button label="Email" wire:click="sendEmail({{$client}})" wire:confirm="คุณต้องการยืนยันการส่ง email หรือไม่"/>
                             @endif
                         </td>
                         <td class="align-top md:border border-primary-blue p-2 ml-2 table md:table-cell">
