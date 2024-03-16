@@ -47,7 +47,7 @@ class SendRemarketingEmail extends Command
                 foreach ($clients as $client) {
                     try {
                         Mail::to($client->email)->send(new mailRemarketing($client));
-                        $this->updateClient($client);
+                        $this->updateClient($client,'last 10 day remider');
                         Log::info("last 10 day remider email sended to: ".$client->client_code.' : '.$client->name);
                         $this->info("last 10 day remider email sended to: ".$client->client_code.' : '.$client->name);
 
@@ -79,7 +79,7 @@ class SendRemarketingEmail extends Command
                     }else{
                         // send mail
                         Mail::to($client->email)->send(new mailRemarketing($client));
-                        $this->updateClient($client);
+                        $this->updateClient($client,'7 day remider mail');
                         Log::info("7 day remider email sended to: ".$client->client_code.' : '.$client->name);
                         $this->info("7 day remider email sended to: ".$client->client_code.' : '.$client->name);
                         // if($client->email){
@@ -108,7 +108,7 @@ class SendRemarketingEmail extends Command
                 // $rmktClient=$client->rmkt->last();
                     Mail::to($client->email)->send(new mailRemarketing($client));
 
-                    $this->updateClient($client);
+                    $this->updateClient($client,'25 day remider mail');
                     Log::info("25 day remider email sended to: ".$client->client_code.' : '.$client->name);
                     $this->info("25 day remider email sended to: ".$client->client_code.' : '.$client->name);
 
