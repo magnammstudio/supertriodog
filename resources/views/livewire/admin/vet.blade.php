@@ -145,7 +145,7 @@
                         </th>
                         @endif
                         <th class="w-24 hidden md:table-cell text-primary-lite">
-                                <x-button flat white class="pointer-events-none" label="น้ำหนัก  แมว"/><br>
+                                <x-button flat white class="pointer-events-none" label="น้ำหนัก  สุนัข"/><br>
                                 <x-badge primary label="Pet's weight" />
                         </th>
                         <th class="w-24 hidden md:table-cell">
@@ -213,7 +213,7 @@
                                 <li><x-badge.circle positive icon="check" class="w-5 h-5 m-auto p-2 inline-block" /> <span class="md:hidden inline-block min-w-max mx-2 my-1">เข้าร่วมโปรแกรม </span>{{ $client->option_3 }} เดือน</span></li>
                                 @endif
                             </ul>
-                            <span class="md:hidden inline-block min-w-max mx-2 mt-1">น้ำหนัก  แมว : </span> {{$client->pet_weight}}
+                            <span class="md:hidden inline-block min-w-max mx-2 mt-1">น้ำหนัก  สุนัข : </span> {{$client->pet_weight}}
                         </td>
                         <td class="align-top md:border mx-2 whitespace-nowrap border-primary-blue p-2 md:text-center table w-full md:w-auto md:table-cell">
                             <span class="md:hidden inline-block min-w-max mx-2">สถานะ : </span> {{$client->active_status??'-'}}

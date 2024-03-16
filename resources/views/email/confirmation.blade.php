@@ -12,7 +12,7 @@
                 หมายเลข <b>{{$client['phone']}}</b><br>
                 ลงทะเบียนรับโปรแกรม LOVE Solution Cat Plus<br>
                 ปลุกพลัง 3 ชั้น ป้องกันปรสิต<br>
-                สำหรับน้องแมว {{$client['pet_name']}}<br>
+                สำหรับน้องหมา {{$client['pet_name']}}<br>
                 สามารถรับสิทธิ์ได้ที่<br>
                 <b>{{$client['vet_name']}}</b><br>
                 ท่านสามารถโชว์หลักฐาน<br>

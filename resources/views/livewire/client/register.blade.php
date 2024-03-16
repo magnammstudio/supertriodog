@@ -33,7 +33,7 @@
             {{env('APP_TAGLINE')}} <br>
         </div>
         <div class="grid gap-2 pb-8">
-            <p>ข้อมูลเจ้าของแมว</p>
+            <p>ข้อมูลเจ้าของสุนัข</p>
             <x-input wire:model.defer="regClient.firstname" label="ชื่อ" placeholder="ชื่อ" required />
             <x-input wire:model.defer="regClient.lastname" label="นามสกุล" placeholder="นามสกุล" required />
             <x-input wire:model.defer="regClient.phone" maxlength="10" minlength="10"
@@ -121,7 +121,7 @@
     {{-- cat info --}}
     <div class="setup-content  min-h-[70vh] flex flex-col {{ $currentStep != 2 ? 'hidden' : '' }}" id="step-2">
         <div class="mt-8 pb-2">
-            <h3 class="text-center text-xl pb-2 font-bold text-primary-blue"> กรุณากรอกข้อมูลแมว </h3>
+            <h3 class="text-center text-xl pb-2 font-bold text-primary-blue"> กรุณากรอกข้อมูลสุนัข </h3>
             <p class="text-center">
                 ที่ต้องการเข้าร่วมโปรแกรม<br>
                 {{env('APP_NAME')}}
@@ -129,10 +129,10 @@
         </div>
 
         <div class="grid gap-2 pb-8">
-            <x-input wire:model.defer="regClient.pet_name" label="ชื่อแมว" placeholder="ชื่อแมว" />
-            <x-input wire:model.defer="regClient.pet_breed" label="ชื่อสายพันธุ์แมว" placeholder="ชื่อสายพันธุ์แมว" />
+            <x-input wire:model.defer="regClient.pet_name" label="ชื่อสุนัข" placeholder="ชื่อสุนัข" />
+            <x-input wire:model.defer="regClient.pet_breed" label="ชื่อสายพันธุ์สุนัข" placeholder="ชื่อสายพันธุ์สุนัข" />
 
-            เลือกช่วงน้ำหนักของแมว
+            เลือกช่วงน้ำหนักของสุนัข
             <div class="grid grid-cols-2 gap-2">
                 <span class="my-2">
                     <x-radio id="weigth-1" value="1.25-2.5 กก." label="1.25-2.5 กก." wire:model.defer="regClient.pet_weight" />

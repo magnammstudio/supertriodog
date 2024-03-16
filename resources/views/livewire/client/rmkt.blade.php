@@ -144,7 +144,7 @@
                         <h3 class="text-center text-xl pb-2 font-bold">กรุณาตรวจสอบข้อมูลเพื่อยืนยันรับสิทธิ์</h3>
 
                         <ul>
-                            <li>ชื่อแมว : {{ $client->pet_name ?? '' }}</li>
+                            <li>ชื่อสุนัข : {{ $client->pet_name ?? '' }}</li>
                             <li>น้ำหนัก : {{ $client->pet_weight ?? '' }}</li>
                             <li>อายุ : {{ $client->pet_age_year ?? '' }} ปี {{ $client->pet_age_month ?? '' }} เดือน</li>
                             <li>คลินิกหรือโรงพยาบาลสัตว์ : {{ $client->vet->vet_name ?? '' }}</li>
