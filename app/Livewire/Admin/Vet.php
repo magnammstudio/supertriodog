@@ -17,6 +17,7 @@ class Vet extends Component
     use Actions;
     public $vet,$stock;
     public $stock_adj;
+    public $rmkt=false;
 
     public function mount($id=null){
         if(!$id){
@@ -39,6 +40,9 @@ class Vet extends Component
         return view('livewire.admin.vet',[
             'vetClients'=>ClientModels::where('vet_id',$this->vet->id)->orderBy('updated_at','desc')->paginate(50)
         ])->extends('layouts.admin');
+    }
+    public function toggleRmkt(){
+        $this->rmkt=!$this->rmkt;
     }
     public function add_stock_adj(){
         $validatedData = $this->validate([

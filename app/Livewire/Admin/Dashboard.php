@@ -20,6 +20,7 @@ class Dashboard extends Component
     ];
     public $static;
     public $vets;
+    public $rmkt=false;
     
     protected $queryString = [
         'search.text'=> ['except' => '','as'=>'q'],
@@ -66,9 +67,12 @@ class Dashboard extends Component
     public function updatingSearch(){
         $this->resetPage();
     }
+
+    public function toggleRmkt(){
+        $this->rmkt=!$this->rmkt;
+    }
     public function sendEmail(clientModel $client){
         Mail::to($client->email)->send(new mailRemarketing($client));
-        
     }
     public function delete (clientModel $client){
         $client->delete();

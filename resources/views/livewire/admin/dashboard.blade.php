@@ -40,7 +40,14 @@
             <span class="text-2xl font-bold float-right">{{$static['client_option_3']}}</span>
         </div>
     </div>
-
+    @if(env('APP_DEBUG'))
+    <x-button label="{{$rmkt?'Re-Markweting Client':'Client'}}" wire:click="toggleRmkt" />
+    @endif
+    @if ($rmkt)
+    <div class="mt-7">
+        <livewire:admin.rmkt-client/>
+    </div>
+    @else
     {{-- {{$search['text']}} --}}
     <div class="flex gap-2 py-4 flex-wrap sm:flex-nowrap justify-between">
         <x-input label="ค้นหา" wire:model.live.debounce.700ms="search.text" hint="ค้นหา ชื่อลูกค้า หมายเลขโทรศัพท์ หรือรหัสสถานพยาบาล">
@@ -67,6 +74,9 @@
         />
         </span>
     </div> 
+
+    
+    
     <div class="overflow-x-auto">
         <table class="table-fixed min-w-full whitespace-nowrap">
             <thead>
@@ -156,6 +166,7 @@
                             @if (Auth::user()->isAdmin)
                             <x-button label="x" wire:click="delete({{$client}})" wire:confirm="คุณต้องการยืนยันการลบหรือไม่"/>
                             <x-button label="Email" wire:click="sendEmail({{$client}})" wire:confirm="คุณต้องการยืนยันการส่ง email หรือไม่"/>
+                            <x-button label="View Email" :href="route('email.remarketing',$client->phone)" target="_blank" wire:confirm="คุณต้องการยืนยันการส่ง email หรือไม่"/>
                             @endif
                         </td>
                         <td class="align-top md:border border-primary-blue p-2 ml-2 table md:table-cell">
@@ -192,4 +203,6 @@
 
     </div>
     <div class="my-4">{{$clients->links()}}</div>
+
+    @endif
 </div>

@@ -8,7 +8,9 @@
                 {{$vet->vet_area}} {{$vet->vet_city}} {{$vet->vet_province}}
             </p>
         </div>
+        <span>
         <x-badge class="rounded-2xl bg-primary-blue text-white p-4 shadow-lg" label="รหัส : {{$vet->id}}" />
+        </span>
     </div>
     <hr class="border-2 border-primary-blue my-4">
     <div class="grid md:grid-cols-2 my-4 gap-4">
@@ -98,6 +100,14 @@
             @endcan
         </div>
     </div>
+    @if(env('APP_DEBUG'))
+    <x-button label="{{$rmkt?'Re-Markweting Client':'Client'}}" wire:click="toggleRmkt" />
+    @endif
+    @if ($rmkt)
+    <div class="mt-7">
+        <livewire:admin.rmkt-client :id='802390' />
+    </div>
+    @else
     <div>
         <!-- updated_at | desc -->
         <div class="mt-7 overflow-x-auto">
@@ -230,4 +240,5 @@
         <div class="text-center p-4">No client regis yet</div>
         @endif
     </div>
+    @endif
 </div>

@@ -88,7 +88,8 @@ class Dashboard extends Component
         // validate
         $this->request['offer_1']=$this->request['offer_1']==true?true:null;
         $this->request['offer_2']=$this->request['offer_2']==true?true:null;
-        $this->request['offer_3']=$this->request['offer_3']==true?true:null;
+        $this->request['offer_3']=$this->request['offer_3']==true?3:null;
+        // $this->request['offer_month']=$this->request['offer_month']?true:null;
         $this->validate([
             // 'request.offer_1'=>[],
             'request.vet_id'=>['required','exists:vets,id'],
@@ -117,8 +118,8 @@ class Dashboard extends Component
         if($this->client->vet_id == $this->request['vet_id']){
             $this->client->option_1=$this->request['offer_1']??null;
             $this->client->option_2=$this->request['offer_2']??null;
-            $this->client->option_3=$this->request['offer_month']??null;
-
+            $this->client->option_3=$this->request['offer_3']??$this->request['offer_month'];
+                // dd($this->client,$this->request);
             $this->client->active_status = 'activated';
             $this->client->active_date = now();
             $this->client->save();
