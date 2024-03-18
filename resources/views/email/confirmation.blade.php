@@ -10,8 +10,8 @@
             <img src="{{asset('img/app-banner.png')}}" class="m-auto w-full"/>
             <p class="max-w-sm m-auto text-center my-4">
                 หมายเลข <b>{{$client['phone']}}</b><br>
-                ลงทะเบียนรับโปรแกรม LOVE Solution Cat Plus<br>
-                ปลุกพลัง 3 ชั้น ป้องกันปรสิต<br>
+                ลงทะเบียนรับโปรแกรม {{env('APP_NAME')}}<br>
+                {{env('APP_TAGLINE')}}<br>
                 สำหรับน้องหมา {{$client['pet_name']}}<br>
                 สามารถรับสิทธิ์ได้ที่<br>
                 <b>{{$client['vet_name']}}</b><br>

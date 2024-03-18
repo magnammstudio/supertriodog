@@ -144,13 +144,13 @@
                     <x-radio id="weigth-3" value="5.1-10 กก." label="5.1-10 กก." wire:model.defer="regClient.pet_weight" />
                 </span>
                 <span class="my-2">
-                    <x-radio id="weigth-4" value="10.1-20 กก." label="10.1-20 กก." wire:model.defer="pet_weight" />
+                    <x-radio id="weigth-4" value="10.1-20 กก." label="10.1-20 กก." wire:model.defer="regClient.pet_weight" />
                 </span>
                 <span class="my-2">
-                    <x-radio id="weigth-5" value="20.1-40 กก." label="20.1-40 กก." wire:model.defer="pet_weight" />
+                    <x-radio id="weigth-5" value="20.1-40 กก." label="20.1-40 กก." wire:model.defer="regClient.pet_weight" />
                 </span>
                 <span class="my-2">
-                    <x-radio id="weigth-6" value="40.1-60 กก." label="40.1-60 กก." wire:model.defer="pet_weight" />
+                    <x-radio id="weigth-6" value="40.1-60 กก." label="40.1-60 กก." wire:model.defer="regClient.pet_weight" />
                 </span>
             </div>
 
