@@ -22,6 +22,11 @@ class Kernel extends ConsoleKernel
                 ->timezone('Asia/Bangkok')->dailyAt('9:00')
                 ->emailOutputTo('maggotgluon@gmail.com');
         }
+        if(env('REMIND_EMAIL',false)){
+            $schedule->command('send:email')
+                ->timezone('Asia/Bangkok')->dailyAt('11:30')
+                ->emailOutputTo('maggotgluon@gmail.com');
+        }
     }
 
     /**
