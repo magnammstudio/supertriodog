@@ -187,3 +187,4 @@ Route::middleware('guest')->group(function () {
 // });
 
 
+Route::view('/', 'maintenance')->name('home');
